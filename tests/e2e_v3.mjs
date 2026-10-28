@@ -168,6 +168,24 @@ try {
   ok(/\p{Script=Tamil}/u.test(await ev(`document.querySelector('.opt').textContent`)), "Tamil options");
   const m = await ev(`({ w: document.documentElement.scrollWidth, v: innerWidth })`);
   ok(m.w <= m.v, "no sideways scroll");
+  ok(await ev(`!!document.getElementById('say')`), "Tamil shows 🔊");
+
+  // Odia and Punjabi: no 🔊 or 🎤 (few phones and browsers support them), start text does not mention them
+  for (const code of ["or", "pa"]) {
+    await ev(`localStorage.removeItem('lf3.draft'); true`);
+    await cdp("Page.navigate", { url: URL_.replace("t=youth&lang=mr", "t=public&lang=" + code) }); await sleep(2000);
+    ok(!(await ev(`document.body.textContent.includes('🎤')`)), `${code}: start text does not mention 🎤`);
+    // Resume on Q1, a typed answer, where 🎤 would normally show
+    await ev(`localStorage.setItem('lf3.draft', JSON.stringify({ tool: 'public', sid: 'LF3-20260101-VOICE0', pos: 5, lang: '${code}', A: {}, P: {}, V: {} })); true`);
+    await cdp("Page.reload"); await sleep(2000);
+    await ev(`document.getElementById('resumeYes').click(); true`); await sleep(400);
+    ok(await ev(`!!document.querySelector('.card textarea, .card input[id^=f_]') && !document.getElementById('say') && !document.querySelector('.mic')`), `${code}: typed question shows no 🔊 or 🎤`);
+  }
+  await ev(`localStorage.setItem('lf3.draft', JSON.stringify({ tool: 'public', sid: 'LF3-20260101-VOICE0', pos: 5, lang: 'ta', A: {}, P: {}, V: {} })); true`);
+  await cdp("Page.reload"); await sleep(2000);
+  await ev(`document.getElementById('resumeYes').click(); true`); await sleep(400);
+  ok(await ev(`!!document.querySelector('.mic') && !!document.getElementById('say')`), "Tamil typed question still shows 🔊 and 🎤");
+  await ev(`localStorage.removeItem('lf3.draft'); true`);
 } catch (e) { console.log("FAIL " + e.message); fails++; }
 finally {
   edge.kill(); web.kill(); sheet.close();

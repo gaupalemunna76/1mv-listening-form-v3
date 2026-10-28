@@ -1,17 +1,17 @@
 // 1MV Listening Form V3 — one question per screen, Shikshagraha look, eight languages (English where a
 // translation is missing), conditional questions, follow-ups, optional 🔊 listen and 🎤 speak,
 // in-progress answers saved to the Sheet, and confirmed sending with retries.
-import { TOOLS } from "./questions.js?v=20261028-1856";
-import { LANGS, UI, t } from "./i18n.js?v=20261028-1856";
-import { assess, isDistress } from "./probe.js?v=20261028-1856";
-import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1856";
-import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1856";
+import { TOOLS } from "./questions.js?v=20261028-2146";
+import { LANGS, UI, t } from "./i18n.js?v=20261028-2146";
+import { assess, isDistress } from "./probe.js?v=20261028-2146";
+import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-2146";
+import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-2146";
 
 const params = new URLSearchParams(location.search);
 // Local test copies (localhost) never send to the real Sheet unless ?sync is added; ?sheet=<url> sends to a test receiver.
 const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const SHEET_URL = LOCAL && params.get("sheet") ? params.get("sheet") : LOCAL && !params.has("sync") ? "" : CONFIG_SHEET_URL;
-const VERSION = "20261028-1856";
+const VERSION = "20261028-2146";
 // Own storage keys: V1 lives on the same domain (gaupalemunna76.github.io) and must not see V3 data.
 const DRAFT = "lf3.draft";
 const STORE = "lf3.responses";
@@ -216,7 +216,7 @@ function renderQuestion() {
       <div class="controls">
         <button type="button" class="btn back" id="back">← ${tx(UI.back)}</button>
         <div class="row">
-          ${canSpeak ? `<button type="button" class="btn say" id="say" aria-label="${tx(UI.listen)}">${ICON_SAY}<span>${tx(UI.listen)}</span></button>` : ""}
+          ${canSpeak && langOf(S.lang).voice !== false ? `<button type="button" class="btn say" id="say" aria-label="${tx(UI.listen)}">${ICON_SAY}<span>${tx(UI.listen)}</span></button>` : ""}
           <button type="button" class="big" id="next">${tx(isLast() ? UI.submit : UI.next)} →</button>
         </div>
       </div>
@@ -254,7 +254,7 @@ function answerHTML(q) {
 
 function textBox(id, value, rows, ph) {
   const field = `<textarea id="${id}" rows="${rows}" class="grow" maxlength="3000" placeholder="${tx(ph)}" aria-labelledby="qtext">${esc(value)}</textarea>`;
-  if (!canListen) return `<div class="type solo">${field}</div>`;
+  if (!canListen || langOf(S.lang).voice === false) return `<div class="type solo">${field}</div>`;
   return `<div class="type">${field}<button type="button" class="mic" data-mic="${id}" aria-label="${tx(UI.micStart)}" title="${tx(UI.micStart)}">${ICON_MIC}</button></div>
     <p class="stxt" id="m_${id}" hidden></p>`;
 }

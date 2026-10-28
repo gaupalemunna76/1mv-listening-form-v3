@@ -1,5 +1,5 @@
 // Languages and screen text. Languages and their order follow the team's language list (28 Oct 2026).
-// speech = language used by 🔊 and 🎤; font = Google font for the script; tag = #TumBolo in that language
+// speech = language used by 🔊 and 🎤; voice: false hides 🔊 and 🎤 (phones and browsers rarely support that language); font = Google font for the script; tag = #TumBolo in that language
 // (Marathi from the team's file; Hindi, Kannada, Telugu, Odia, Tamil, Punjabi are drafts for native review).
 // Screen text below is in English, Hindi and Marathi; any other language shows English until its text is added.
 // Question text comes from forms.js (made from the team's Excel files by tools/import_excel.py).
@@ -8,13 +8,13 @@ export const LANGS = [
   { code: "hi", name: "हिंदी", speech: "hi-IN", tag: "#तुमबोलो", font: "Noto Sans Devanagari" },
   { code: "kn", name: "ಕನ್ನಡ", speech: "kn-IN", tag: "#ನೀವುಹೇಳಿ", font: "Noto Sans Kannada" },
   { code: "te", name: "తెలుగు", speech: "te-IN", tag: "#మీరుచెప్పండి", font: "Noto Sans Telugu" },
-  { code: "or", name: "ଓଡ଼ିଆ", speech: "or-IN", tag: "#ତୁମେକୁହ", font: "Noto Sans Oriya" },
+  { code: "or", name: "ଓଡ଼ିଆ", speech: "or-IN", voice: false, tag: "#ତୁମେକୁହ", font: "Noto Sans Oriya" },
   { code: "ta", name: "தமிழ்", speech: "ta-IN", tag: "#நீங்கசொல்லுங்க", font: "Noto Sans Tamil" },
-  { code: "pa", name: "ਪੰਜਾਬੀ", speech: "pa-IN", tag: "#ਤੁਸੀਂਬੋਲੋ", font: "Noto Sans Gurmukhi" },
+  { code: "pa", name: "ਪੰਜਾਬੀ", speech: "pa-IN", voice: false, tag: "#ਤੁਸੀਂਬੋਲੋ", font: "Noto Sans Gurmukhi" },
   { code: "mr", name: "मराठी", speech: "mr-IN", tag: "#तुम्हीसांगा", font: "Noto Sans Devanagari" },
 ];
 
-import { fill } from "./translations.js?v=20261028-1856";
+import { fill } from "./translations.js?v=20261028-2146";
 
 const T3 = (en, hi, mr) => ({ en, hi, mr });
 
