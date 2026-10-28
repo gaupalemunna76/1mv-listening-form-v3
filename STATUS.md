@@ -40,6 +40,23 @@ Fups: asked & why, Spoken answers, then one column per question named **`Q<no> <
 Script rules: columns of a tab never change (different columns → rejected); a Completed row is never turned back to
 In progress; an older update never overwrites a newer one.
 
+## Own server option (instead of the Google Sheet)
+The form does not change: only `config.js` `SHEET_URL` points to our own API. Full costing and capacity: technical note
+https://claude.ai/artifact/1cEzjrG5DkXbE8CHawYDxQ (section "If we host on our own server with a database").
+- **API** (replaces `google_sheet/Code.gs`, ~100–150 lines Node.js or Python): POST JSON `{tool, persona, columns, values}`
+  as today; same rules — upsert by `session_id`, never turn Completed back, ignore older "Last updated";
+  reply plain text `ok` / `busy` / `rejected…` (the form already understands these). Allow CORS from the form's site only;
+  accept `text/plain` bodies (no preflight; `sendBeacon` uses it); rate-limit per device.
+- **Database** (PostgreSQL): one table `responses` — `session_id` primary key, `user_id`, `form`, `status`, `language`,
+  `source`, `started_at`, `updated_at`, `safety_flag`, `stopped_at`, `answers` (JSONB, column name → value).
+  Question changes then need no new tab; a nightly export can still fill a Google Sheet for the team.
+- **Capacity (estimate, load-test first):** hundreds of saves a second, 1 lakh+ finished responses an hour,
+  ≈5 KB per response (10 lakh ≈ 5 GB).
+- **Max cost a month** (₹100/US$, +18% GST): Supabase Pro ₹2,950 · own server small ₹2,832 · 10 lakh+ scale with
+  backups ₹6,797 · with a separate standby database ₹20,036 · Cloudflare Workers + D1 ₹0–590. Plus person-time to run it.
+- **Testing:** `tests/e2e_v3.mjs` already sends to a stand-in receiver (`?sheet=<url>` on localhost) — point it at the API.
+- **Running it:** daily backups + monthly restore test, HTTPS renewal, security updates, uptime alert.
+
 ## Adding a language (when the translated Excel arrives)
 1. Put the file in `translations/` (stays on this computer, not uploaded). The file name must contain the language
    (e.g. "1MV Survey Tools - Tamil.xlsx"); same sheets and rows as the English file.
