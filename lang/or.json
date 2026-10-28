@@ -306,5 +306,8 @@
  "state.jammu_kashmir": "ଜାମ୍ମୁ ଓ କାଶ୍ମୀର",
  "state.ladakh": "ଲଦାଖ",
  "state.lakshadweep": "ଲକ୍ଷଦ୍ୱୀପ",
- "state.puducherry": "ପୁଦୁଚେରୀ"
+ "state.puducherry": "ପୁଦୁଚେରୀ",
+ "ui.consentFirst": "ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ ଦୟାକରି ସହମତି ବାକ୍ସରେ ଟିକ୍ ଦିଅନ୍ତୁ।",
+ "ui.crashText": "ଏହି ସ୍କ୍ରିନରେ କିଛି ଭୁଲ ହେଲା। ଆପଣଙ୍କ ଉତ୍ତର ଏହି ଡିଭାଇସରେ ସେଭ୍ ଅଛି।",
+ "ui.reload": "ପୁଣି ଖୋଲନ୍ତୁ"
 }

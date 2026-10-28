@@ -141,3 +141,11 @@ th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mu
   .controls #next{grid-column:1 / -1;order:-1;width:100%}  .opts.many{grid-template-columns:minmax(0,1fr)}
 }
 .followup .mic{background:#fff}
+/* Start not ready yet: looks paused but can still be tapped (it then says what is missing) */
+.big.wait{background:#b9b3cf;border-color:#b9b3cf;box-shadow:none}
+.big.wait:hover{background:#a69fc2;border-color:#a69fc2}
+.attention{animation:attention 1.2s ease 2;border-radius:12px}
+@keyframes attention{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 4px var(--sg-orange)}}
+@media (prefers-reduced-motion:reduce){.attention{animation:none;outline:3px solid var(--sg-orange)}}
+.crash{border-top:5px solid var(--err)}
+.oldbrowser{max-width:860px;margin:16px auto;background:#fff;border:2px solid var(--sg-orange);border-radius:12px;padding:16px;display:grid;gap:8px}

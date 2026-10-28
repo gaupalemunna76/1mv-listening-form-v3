@@ -14,7 +14,7 @@ export const LANGS = [
   { code: "mr", name: "मराठी", speech: "mr-IN", tag: "#तुम्हीसांगा", font: "Noto Sans Devanagari" },
 ];
 
-import { fill } from "./translations.js?v=20261028-1642";
+import { fill } from "./translations.js?v=20261028-1652";
 
 const T3 = (en, hi, mr) => ({ en, hi, mr });
 
@@ -38,6 +38,9 @@ export const UI = {
               "तुमची उत्तरे निनावी राहतील. कृपया फॉर्ममध्ये कुठेही तुमचे नाव, फोन नंबर किंवा पत्ता लिहू नका."),
   consent: T3("I agree to share my answers for this study.", "मैं इस अध्ययन के लिए अपने जवाब देने के लिए सहमत हूँ।", "या अभ्यासासाठी माझी उत्तरे देण्यास मी सहमत आहे."),
   start: T3("Start", "शुरू करें", "सुरू करा"),
+  consentFirst: T3("Please tick the box to agree before you start.", "शुरू करने से पहले कृपया सहमति वाले बॉक्स पर टिक करें।", "सुरू करण्यापूर्वी कृपया संमतीच्या चौकटीत खूण करा."),
+  crashText: T3("Something went wrong on this screen. Your answers are saved on this device.", "इस स्क्रीन पर कुछ गड़बड़ हो गई। आपके जवाब इस डिवाइस पर सेव हैं।", "या स्क्रीनवर काहीतरी चूक झाली. तुमची उत्तरे या डिव्हाइसवर जतन आहेत."),
+  reload: T3("Reload", "फिर से खोलें", "पुन्हा उघडा"),
   pickFormFirst: T3("Choose a form above to start.", "शुरू करने के लिए ऊपर से एक फ़ॉर्म चुनें।", "सुरू करण्यासाठी वरून एक फॉर्म निवडा."),
   next: T3("Next", "आगे", "पुढे"),
   back: T3("Back", "पीछे", "मागे"),
@@ -100,6 +103,6 @@ for (const [k, e] of Object.entries(UI)) fill(e, "ui." + k);
 export function t(entry, lang, vars) {
   if (!entry) return "";
   let s = entry[lang] || entry.en || "";
-  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, v);
+  if (vars) for (const [k, v] of Object.entries(vars)) s = s.split(`{${k}}`).join(v);   // not replaceAll: older phones
   return s;
 }

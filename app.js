@@ -1,17 +1,17 @@
 // 1MV Listening Form V3 — one question per screen, Shikshagraha look, eight languages (English where a
 // translation is missing), conditional questions, follow-ups, optional 🔊 listen and 🎤 speak,
 // in-progress answers saved to the Sheet, and confirmed sending with retries.
-import { TOOLS } from "./questions.js?v=20261028-1642";
-import { LANGS, UI, t } from "./i18n.js?v=20261028-1642";
-import { assess, isDistress } from "./probe.js?v=20261028-1642";
-import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1642";
-import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1642";
+import { TOOLS } from "./questions.js?v=20261028-1652";
+import { LANGS, UI, t } from "./i18n.js?v=20261028-1652";
+import { assess, isDistress } from "./probe.js?v=20261028-1652";
+import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1652";
+import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1652";
 
 const params = new URLSearchParams(location.search);
 // Local test copies (localhost) never send to the real Sheet unless ?sync is added; ?sheet=<url> sends to a test receiver.
 const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const SHEET_URL = LOCAL && params.get("sheet") ? params.get("sheet") : LOCAL && !params.has("sync") ? "" : CONFIG_SHEET_URL;
-const VERSION = "20261028-1642";
+const VERSION = "20261028-1652";
 // Own storage keys: V1 lives on the same domain (gaupalemunna76.github.io) and must not see V3 data.
 const DRAFT = "lf3.draft";
 const STORE = "lf3.responses";
@@ -85,11 +85,26 @@ document.addEventListener("click", e => { const b = e.target.closest("[data-lang
 // ---------------- screens ----------------
 function render() {
   stopVoice();
-  if (params.has("admin")) return renderAdmin();
-  if (S.screen === "q" && S.tool) return renderQuestion();
-  if (S.screen === "thanks") return renderThanks();
-  return renderStart();
+  // A mistake on one screen must never leave a blank page: show a message, answers stay saved on the device.
+  try {
+    if (params.has("admin")) return renderAdmin();
+    if (S.screen === "q" && S.tool) return renderQuestion();
+    if (S.screen === "thanks") return renderThanks();
+    return renderStart();
+  } catch (err) { showCrash(err); }
 }
+function showCrash(err) {
+  console.error(err);
+  app.innerHTML = `<section class="screen"><div class="panel stack crash" role="alert">
+    <p><b>${tx(UI.crashText)}</b></p>
+    <div class="row"><button class="big" id="crashReload">${tx(UI.reload)}</button><button class="btn" id="crashFresh">${tx(UI.resumeNo)}</button></div>
+    <p class="small muted">${esc(String(err?.message || err).slice(0, 160))}</p></div></section>`;
+  $("#crashReload").onclick = () => location.reload();
+  $("#crashFresh").onclick = () => { clearDraft(); location.href = location.pathname + location.search; };
+}
+// Errors outside a screen (a button handler, speech, sending): only take over when the page has nothing to show.
+addEventListener("error", e => { if (!app.querySelector(".panel, .card")) showCrash(e.error || e.message); });
+addEventListener("unhandledrejection", e => console.error(e.reason));
 
 const ICON_SAY = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const ICON_MIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
@@ -97,8 +112,27 @@ const supportBox = () => `<div class="support" role="note"><b>${tx(UI.supportTit
 const whenText = iso => { try { return new Date(iso).toLocaleString(S.lang === "en" ? "en-IN" : S.lang + "-IN", { dateStyle: "medium", timeStyle: "short" }); } catch { return iso; } };
 const missingLang = tool => S.lang !== "en" && allItems(tool).some(q => !q.label[S.lang]);
 
-function renderStart() {
+// An unfinished response saved by an older version: keep only answers to questions and options that still
+// exist, and a position inside the form. Anything unusable is dropped instead of breaking the page.
+function loadDraft() {
   const d = load(DRAFT, null);
+  const tool = d && TOOLS[d.tool];
+  if (!tool || typeof d.sid !== "string") { if (d) clearDraft(); return null; }
+  const qs = Object.fromEntries(allItems(tool).map(q => [q.id, q]));
+  const known = o => Object.fromEntries(Object.entries(o && typeof o === "object" ? o : {}).filter(([k]) => qs[k.replace(/_other$/, "")]));
+  d.A = known(d.A); d.P = known(d.P); d.V = known(d.V);
+  for (const q of Object.values(qs)) {
+    const v = d.A[q.id], codes = q.options && !q.optionsFor ? q.options.map(o => o.v) : null;
+    if (v === undefined || !codes) continue;
+    if (q.type === "multi") d.A[q.id] = Array.isArray(v) ? v.filter(x => codes.includes(x)) : [];
+    else if (!codes.includes(v) && v !== "__other") delete d.A[q.id];
+  }
+  d.pos = Math.min(Math.max(0, Number(d.pos) || 0), flat(tool).length - 1);
+  return d;
+}
+
+function renderStart() {
+  const d = loadDraft();
   const preset = params.get("t");
   if (!S.tool && preset && TOOLS[preset]) S.tool = TOOLS[preset];
   app.innerHTML = `<section class="screen">
@@ -127,19 +161,28 @@ function renderStart() {
       ${UI.draftNote[S.lang] ? `<p class="small muted">${tx(UI.draftNote)}</p>` : ""}
       <label class="check"><input type="checkbox" id="consent" ${S.consent ? "checked" : ""}><span>${tx(UI.consent)}</span></label>
     </div>
-    <div class="row"><button class="big" id="startBtn" ${S.tool && S.consent ? "" : "disabled"}>${tx(UI.start)} →</button>
-      <span class="small muted" id="startHint">${S.tool ? "" : tx(UI.pickFormFirst)}</span></div>
+    <div class="stack"><div class="row"><button class="big${S.tool && S.consent ? "" : " wait"}" id="startBtn">${tx(UI.start)} →</button></div>
+      <p class="hint" id="startHint" aria-live="polite"></p></div>
   </section>`;
   app.querySelectorAll("[data-form]").forEach(b => b.onclick = () => { S.tool = TOOLS[b.dataset.form]; renderStart(); });
-  $("#consent").onchange = e => { S.consent = e.target.checked; $("#startBtn").disabled = !(S.tool && S.consent); };
+  $("#consent").onchange = e => { S.consent = e.target.checked; $("#startBtn").classList.toggle("wait", !(S.tool && S.consent)); $("#startHint").textContent = ""; };
+  // Start can always be tapped: if something is missing it says what and shows where.
+  const needs = (msg, el) => {
+    $("#startHint").textContent = t(msg, S.lang);
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.classList.remove("attention"); void el.offsetWidth; el.classList.add("attention");
+  };
   $("#startBtn").onclick = () => {
+    if (!S.tool) return needs(UI.pickFormFirst, $(".forms"));
+    if (!S.consent) { needs(UI.consentFirst, $(".check")); return $("#consent").focus({ preventScroll: true }); }
     Object.assign(S, { A: {}, P: {}, V: {}, flag: false, sid: newSid(), started: new Date().toISOString() });
     S.pos = firstVisible(0);
     clearDraft(); go("q"); saveDraft();
   };
   if ($("#resumeYes")) {
     $("#resumeYes").onclick = () => {
-      Object.assign(S, { tool: TOOLS[d.tool], pos: d.pos || 0, A: d.A || {}, P: d.P || {}, V: d.V || {}, flag: !!d.flag, sid: d.sid || newSid(), started: d.started || new Date().toISOString(), source: d.source || S.source, screen: "q" });
+      Object.assign(S, { tool: TOOLS[d.tool], pos: d.pos, A: d.A || {}, P: d.P || {}, V: d.V || {}, flag: !!d.flag, sid: d.sid || newSid(), started: d.started || new Date().toISOString(), source: d.source || S.source, screen: "q" });
+      S.pos = firstVisible(S.pos);
       setLang(d.lang || S.lang);
     };
     $("#resumeNo").onclick = () => { clearDraft(); renderStart(); };
@@ -468,15 +511,27 @@ async function syncWaiting() {
     }
     await syncDraft();
   } finally { syncing = false; }
+  pruneStore();
   const due = load(STORE, []).filter(r => !r.sent && !r.skipped).map(r => r.nextTry || Date.now() + 15000);
   if (due.length) retryTimer = setTimeout(syncWaiting, Math.max(1000, Math.min(...due) - Date.now()));
+}
+
+// A shared phone can collect hundreds of responses: keep every unsent one, and only the newest sent ones
+// (they are already in the Sheet), so the browser's storage (about 5 MB) never fills up.
+const KEEP_SENT = 300;
+function pruneStore() {
+  const all = load(STORE, []);
+  const sent = all.filter(r => r.sent);
+  if (sent.length <= KEEP_SENT) return;
+  const drop = new Set(sent.slice(0, sent.length - KEEP_SENT).map(r => r.sid));
+  save(STORE, all.filter(r => !drop.has(r.sid)));
 }
 
 // Unfinished response: sent as "In progress" when the page is opened again and when the person leaves the
 // page (switches app, closes the tab). Only sent if something changed since the last confirmed send.
 const draftDirty = d => d && TOOLS[d.tool] && d.sid && d.updated && d.updated !== d.sentUpdated && Object.keys(d.A || {}).length;
 async function syncDraft() {
-  const d = load(DRAFT, null);
+  const d = loadDraft();
   if (!SHEET_URL || !draftDirty(d)) return;
   const reply = await post(payload(buildRecord(d, false)));
   const now = load(DRAFT, null);
@@ -484,7 +539,7 @@ async function syncDraft() {
 }
 let beaconed = "";
 function beaconDraft() {
-  const d = load(DRAFT, null);
+  const d = loadDraft();
   if (!SHEET_URL || !draftDirty(d) || beaconed === d.updated || !navigator.sendBeacon) return;
   // The reply cannot be read here, so the draft stays "not confirmed" and is sent again on the next visit.
   if (navigator.sendBeacon(SHEET_URL, new Blob([payload(buildRecord(d, false))], { type: "text/plain;charset=utf-8" }))) beaconed = d.updated;
@@ -550,5 +605,6 @@ document.documentElement.lang = S.lang;
 loadFont(langOf(S.lang));
 renderTop();
 render();
+window.__lf3 = true;
 syncWaiting();
 addEventListener("online", syncWaiting);

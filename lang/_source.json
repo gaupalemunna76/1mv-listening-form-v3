@@ -914,6 +914,21 @@
   "mr": "सुरू करा",
   "hi": "शुरू करें"
  },
+ "ui.consentFirst": {
+  "en": "Please tick the box to agree before you start.",
+  "mr": "सुरू करण्यापूर्वी कृपया संमतीच्या चौकटीत खूण करा.",
+  "hi": "शुरू करने से पहले कृपया सहमति वाले बॉक्स पर टिक करें।"
+ },
+ "ui.crashText": {
+  "en": "Something went wrong on this screen. Your answers are saved on this device.",
+  "mr": "या स्क्रीनवर काहीतरी चूक झाली. तुमची उत्तरे या डिव्हाइसवर जतन आहेत.",
+  "hi": "इस स्क्रीन पर कुछ गड़बड़ हो गई। आपके जवाब इस डिवाइस पर सेव हैं।"
+ },
+ "ui.reload": {
+  "en": "Reload",
+  "mr": "पुन्हा उघडा",
+  "hi": "फिर से खोलें"
+ },
  "ui.pickFormFirst": {
   "en": "Choose a form above to start.",
   "mr": "सुरू करण्यासाठी वरून एक फॉर्म निवडा.",

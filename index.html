@@ -10,7 +10,7 @@
 <link rel="icon" href="assets/shikshagraha-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="styles.css?v=20261028-1642">
+<link rel="stylesheet" href="styles.css?v=20261028-1652">
 </head>
 <body>
 <header class="top">
@@ -24,6 +24,14 @@
 </header>
 <main id="app" aria-live="polite"></main>
 <footer class="foot"><span id="ver"></span></footer>
-<script type="module" src="app.js?v=20261028-1642"></script>
+<script>
+  // Old or blocked browsers: if the form has not started after 15 s (or modules are not supported), say what to do.
+  function lf3Old() { var m = document.getElementById("app"); if (window.__lf3 || !m || m.innerHTML) return;
+    m.innerHTML = '<div class="oldbrowser"><b>This form could not open in this browser.</b><span>Please check your internet, update Google Chrome, or open the link in Chrome.</span>' +
+      '<span lang="hi">यह फ़ॉर्म इस ब्राउज़र में नहीं खुल पाया। कृपया इंटरनेट देखें, Google Chrome अपडेट करें, या लिंक Chrome में खोलें।</span></div>'; }
+  setTimeout(lf3Old, 15000);
+</script>
+<script nomodule>lf3Old();</script>
+<script type="module" src="app.js?v=20261028-1652"></script>
 </body>
 </html>

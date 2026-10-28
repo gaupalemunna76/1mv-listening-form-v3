@@ -306,5 +306,8 @@
  "state.jammu_kashmir": "ਜੰਮੂ ਅਤੇ ਕਸ਼ਮੀਰ",
  "state.ladakh": "ਲੱਦਾਖ",
  "state.lakshadweep": "ਲਕਸ਼ਦੀਪ",
- "state.puducherry": "ਪੁਡੂਚੇਰੀ"
+ "state.puducherry": "ਪੁਡੂਚੇਰੀ",
+ "ui.consentFirst": "ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਹਿਮਤੀ ਵਾਲੇ ਡੱਬੇ 'ਤੇ ਟਿੱਕ ਕਰੋ।",
+ "ui.crashText": "ਇਸ ਸਕ੍ਰੀਨ 'ਤੇ ਕੁਝ ਗੜਬੜ ਹੋ ਗਈ। ਤੁਹਾਡੇ ਜਵਾਬ ਇਸ ਡਿਵਾਈਸ 'ਤੇ ਸੇਵ ਹਨ।",
+ "ui.reload": "ਮੁੜ ਖੋਲ੍ਹੋ"
 }

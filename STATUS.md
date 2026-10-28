@@ -50,11 +50,31 @@ In progress; an older update never overwrites a newer one.
 Changing the **English** question wording changes the column names → the Sheet rejects new responses for that form.
 Rename the old tab first (e.g. `Youth (old)`), then publish; a fresh tab is made on the next response.
 
+## Keeping it from breaking (rules for anyone who edits this)
+| Do | Why |
+|---|---|
+| Change questions only in the Excel → `python tools/import_excel.py` | The importer stops with a clear message if a type, condition or row does not line up. |
+| Fix a translation in `lang/<code>.json` → `node tools/check_lang.mjs <code>` → `node tools/build_lang.mjs` | The checker catches missing text, lost {placeholders}, URL, helpline numbers and wrong script. |
+| Run `node tests/run_all.mjs` before pushing; `python set_version.py` before the commit | All checks in one go. Version stamp makes phones load the new code, not an old copy. |
+| Never edit row 1 (headers) of a Sheet tab; never rename a tab in use | The script finds columns by header name. Extra columns you add yourself are fine; sorting, filtering and deleting rows are fine. |
+| Changing an English question = new column → rename the old tab first (e.g. `Youth (old)`) | Old-format responses still waiting on phones are rejected (kept on the phone, CSV in `?admin`). |
+
+Built-in safety in the form:
+- A mistake on any screen shows "Something went wrong — your answers are saved" with Reload / Start fresh, never a blank page.
+- Unfinished answers saved by an older version are cleaned on load (removed questions/options dropped, position corrected).
+- Broken saved data on a phone is ignored, the start screen still opens.
+- Each phone keeps all unsent responses but only the newest 300 sent ones, so browser storage never fills up.
+- Start can always be tapped: it says what is missing (form or consent) and highlights it.
+- Very old browsers or no internet on first open: a clear message (English + Hindi) instead of a blank page.
+- Sending: confirmed by the Sheet's reply, retried with growing waits; the script waits its turn (lock) and replies "busy" instead of failing.
+- Git pre-push check (`tools/install_hooks.sh`, once per computer) blocks a push when a check fails.
+
 ## Run and test
 ```
 node tests/forms.test.mjs          # questions, conditions, columns, districts, follow-ups (104)
 node tests/e2e_v3.mjs              # whole Youth form in headless Edge with a fake Sheet (40)
 node tests/transcript.test.mjs && node tests/phone_speech.test.mjs   # speech clean-up (16)
+node tests/run_all.mjs                                              # every check (49 browser + 104 form checks …)
 python set_version.py && git add -A && git commit && git push
 ```
 Local copies never send to the real Sheet unless `?sync` is added (`?sheet=<url>` sends to a test receiver).

@@ -72,7 +72,9 @@ try {
   ok(await ev(`document.getElementById('tag').textContent`) === "#तुम्हीसांगा", "Marathi #TumBolo in the header");
   ok(await ev(`!!document.querySelector('.brand img[alt=Shikshagraha]')`), "Shikshagraha logo shown");
   ok((await ev(`document.querySelector('.opening').textContent`)).includes("तरुणांना दररोज"), "Marathi opening text from the Excel");
-  ok(await ev(`document.getElementById('startBtn').disabled`) === true, "Start locked until consent");
+  await ev(`document.getElementById('startBtn').click(); true`); await sleep(300);
+  ok(!(await ev(`!!document.querySelector('.card')`)) && (await ev(`document.getElementById('startHint').textContent`)).length > 0, "Start without consent: stays, says what is missing");
+  ok(await ev(`document.querySelector('.check').classList.contains('attention')`), "consent box highlighted");
   await ev(`document.getElementById('consent').click(); document.getElementById('startBtn').click(); true`); await sleep(300);
 
   ok(await ev(`T.q()`) === "Q0_1", "first question is 0.1 age");
@@ -136,8 +138,25 @@ try {
   ok(await ev(`JSON.parse(localStorage.getItem('lf3.responses'))[0].sent`) === true, "device marks it sent after the Sheet says ok");
   ok(await ev(`localStorage.getItem('lf.responses.v1') === null && localStorage.getItem('lf.draft.v2') === null`), "Form 1 storage untouched");
 
+  // Old or broken saved data must not break the page
+  await ev(`localStorage.setItem('lf3.draft', JSON.stringify({ tool: 'youth', sid: 'LF3-20260101-ABCDEF', pos: 999, lang: 'mr', A: { Q0_1: 'O9', Q0_2: 'O1', OLD_Q: 'x', Q0_8a: 'nope' }, P: 5, V: null, updated: '' })); true`);
+  await cdp("Page.reload"); await sleep(2000); await ev(helpers);
+  ok(await ev(`!!document.getElementById('resumeYes')`), "old-format draft: page still opens with resume");
+  await ev(`document.getElementById('resumeYes').click(); true`); await sleep(400); await ev(helpers);
+  ok(await ev(`!!document.querySelector('.card') && !document.querySelector('.crash')`), "old-format draft: resumes on a real question");
+  const dd = await ev(`JSON.parse(localStorage.getItem('lf3.draft'))`);
+  ok(!dd.A.OLD_Q && !dd.A.Q0_1 && dd.A.Q0_2 === "O1", "unknown questions and options dropped, good answers kept");
+  await ev(`localStorage.setItem('lf3.draft', '{not json'); true`);
+  await cdp("Page.reload"); await sleep(2000);
+  ok(await ev(`!!document.getElementById('startBtn')`), "broken saved data: start screen still shows");
+  // Storage stays small on a shared phone
+  await ev(`localStorage.removeItem('lf3.draft'); const many = Array.from({ length: 350 }, (_, i) => ({ sid: 'LF3-20260101-' + String(i).padStart(6, '0'), tool: 'youth', cols: [], values: [], sent: true, saved: '' })); localStorage.setItem('lf3.responses', JSON.stringify(many)); true`);
+  await cdp("Page.reload"); await sleep(2500);
+  ok(await ev(`JSON.parse(localStorage.getItem('lf3.responses')).length`) === 300, "only the newest 300 sent responses kept on the device");
+  await ev(helpers);
+
   // Language switch: Tamil shows Tamil #TumBolo and English questions with a note
-  await ev(`document.getElementById('home').click(); true`); await sleep(200);
+  await ev(`document.getElementById('home')?.click(); true`); await sleep(200);
   await ev(`const s = document.getElementById('langSel'); s.value = 'ta'; s.dispatchEvent(new Event('change')); true`); await sleep(200);
   ok(await ev(`document.getElementById('tag').textContent`) === "#நீங்கசொல்லுங்க", "Tamil #TumBolo after switching");
   await ev(`document.querySelector('[data-form=parent]').click(); true`); await sleep(200);

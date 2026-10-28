@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks a push when a check fails (installed by tools/install_hooks.sh). Skip only in an emergency: git push --no-verify
+node tests/run_all.mjs --quick || exit 1
