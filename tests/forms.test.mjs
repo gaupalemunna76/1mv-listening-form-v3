@@ -6,7 +6,7 @@ import { FORMS } from "../forms.js";
 import { DISTRICTS } from "../districts.js";
 import { STATES } from "../states.js";
 import { LANGS } from "../i18n.js";
-import { assess } from "../probe.js";
+import { assess, isDistress } from "../probe.js";
 
 let n = 0;
 const eq = (a, b, m) => { assert.deepEqual(a, b, m); n++; };
@@ -82,5 +82,13 @@ for (const l of LANGS.filter(l => l.code !== "en")) {
   }
   yes(STATES.every(s => TOOLS.youth.sections[0].items.find(x => x.source === "state").options.find(o => o.v === s.v)[l.code]), `${l.code}: state names`);
 }
+
+// Safety words show the helpline in every language; "don't know" gets a follow-up in every language
+for (const [lang, text] of [["en", "I want to die"], ["hi", "मैं आत्महत्या के बारे में सोचता हूँ"], ["mr", "मला जगायचे नाही"], ["kn", "ನನಗೆ ಬದುಕಲು ಇಷ್ಟವಿಲ್ಲ"],
+  ["te", "నాకు చనిపోవాలని ఉంది"], ["or", "ମୁଁ ମରିବାକୁ ଚାହେଁ"], ["ta", "எனக்கு வாழ விருப்பமில்லை"], ["pa", "ਮੈਂ ਮਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ"]])
+  yes(isDistress(text), `${lang}: safety words show the helpline`);
+for (const [lang, text] of [["kn", "ಗೊತ್ತಿಲ್ಲ"], ["te", "తెలియదు"], ["or", "ଜାଣିନାହିଁ"], ["ta", "தெரியாது"], ["pa", "ਪਤਾ ਨਹੀਂ"]])
+  eq(assess(text, { minWords: 1 }), "nonanswer", `${lang}: "don't know" gets a follow-up`);
+yes(!isDistress("I love adventure sports") && !isDistress("சாகசம் பிடிக்கும்"), "ordinary answers are not flagged");
 
 console.log(`${n} / ${n} passed`);

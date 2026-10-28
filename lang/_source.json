@@ -839,11 +839,6 @@
   "en": "What is one thing you could do to help young people have a successful future? Please describe it a little.",
   "mr": "तरुणांचे भविष्य यशस्वी व्हावे यासाठी तुम्ही कोणती एक गोष्ट करू शकता? थोडे सविस्तर सांगा."
  },
- "ui.appName": {
-  "en": "1 Million Voices",
-  "mr": "१० लाख आवाज",
-  "hi": "10 लाख आवाज़ें"
- },
  "ui.startTitle": {
   "en": "How do you see the future of young people?",
   "mr": "तुम्ही तरुणांच्या भविष्याकडे कसे पाहता?",
@@ -954,11 +949,6 @@
   "mr": "ऐका",
   "hi": "सुनें"
  },
- "ui.stopListen": {
-  "en": "Stop",
-  "mr": "थांबवा",
-  "hi": "रोकें"
- },
  "ui.qOf": {
   "en": "Question {i} of {n}",
   "mr": "प्रश्न {i} / {n}",
@@ -988,11 +978,6 @@
   "en": "You can choose more than one.",
   "mr": "तुम्ही एकापेक्षा जास्त निवडू शकता.",
   "hi": "आप एक से ज़्यादा चुन सकते हैं।"
- },
- "ui.other": {
-  "en": "Other:",
-  "mr": "इतर:",
-  "hi": "अन्य:"
  },
  "ui.yourAnswer": {
   "en": "Type your answer here",

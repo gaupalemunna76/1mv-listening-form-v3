@@ -14,12 +14,11 @@ export const LANGS = [
   { code: "mr", name: "मराठी", speech: "mr-IN", tag: "#तुम्हीसांगा", font: "Noto Sans Devanagari" },
 ];
 
-import { fill } from "./translations.js?v=20261028-1853";
+import { fill } from "./translations.js?v=20261028-1856";
 
 const T3 = (en, hi, mr) => ({ en, hi, mr });
 
 export const UI = {
-  appName: T3("1 Million Voices", "10 लाख आवाज़ें", "१० लाख आवाज"),
   startTitle: T3("How do you see the future of young people?", "आप युवाओं के भविष्य को कैसे देखते हैं?", "तुम्ही तरुणांच्या भविष्याकडे कसे पाहता?"),
   startLead: T3("A short form with simple questions. Type your answers, or tap 🎤 to speak them. Tap 🔊 to hear any question.",
                 "आसान सवालों वाला एक छोटा फ़ॉर्म। जवाब लिखें, या 🎤 दबाकर बोलें। कोई भी सवाल सुनने के लिए 🔊 दबाएँ।",
@@ -46,14 +45,12 @@ export const UI = {
   back: T3("Back", "पीछे", "मागे"),
   submit: T3("Submit", "जमा करें", "सबमिट करा"),
   listen: T3("Listen", "सुनें", "ऐका"),
-  stopListen: T3("Stop", "रोकें", "थांबवा"),
   qOf: T3("Question {i} of {n}", "सवाल {i} / {n}", "प्रश्न {i} / {n}"),
   required: T3("Required", "ज़रूरी", "आवश्यक"),
   requiredError: T3("Please answer this question.", "कृपया इस सवाल का जवाब दें।", "कृपया या प्रश्नाचे उत्तर द्या."),
   numberError: T3("Please enter a number between {min} and {max}.", "कृपया {min} से {max} के बीच कोई संख्या लिखें।", "कृपया {min} ते {max} मधील संख्या लिहा."),
   choose: T3("Choose", "चुनें", "निवडा"),
   chooseMany: T3("You can choose more than one.", "आप एक से ज़्यादा चुन सकते हैं।", "तुम्ही एकापेक्षा जास्त निवडू शकता."),
-  other: T3("Other:", "अन्य:", "इतर:"),
   yourAnswer: T3("Type your answer here", "अपना जवाब यहाँ लिखें", "तुमचे उत्तर इथे लिहा"),
   probeEmpty: T3("You left this blank. Your answer really helps us.", "आपने यह खाली छोड़ा है। आपका जवाब हमारे लिए बहुत काम का है।", "तुम्ही हे रिकामे सोडले आहे. तुमचे उत्तर आमच्यासाठी खूप महत्त्वाचे आहे."),
   probeShort: T3("Thank you. Could you tell us a little more?", "धन्यवाद। क्या आप थोड़ा और बता सकते हैं?", "धन्यवाद. थोडे अधिक सांगाल का?"),

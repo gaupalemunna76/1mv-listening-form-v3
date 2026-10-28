@@ -88,8 +88,8 @@ Built-in safety in the form:
 
 ## Run and test
 ```
-node tests/forms.test.mjs          # questions, conditions, columns, districts, follow-ups (104)
-node tests/e2e_v3.mjs              # whole Youth form in headless Edge with a fake Sheet (40)
+node tests/forms.test.mjs          # questions, conditions, columns, districts, follow-ups, safety words in all languages (118)
+node tests/e2e_v3.mjs              # whole Youth form in headless Edge with a fake Sheet (49)
 node tests/transcript.test.mjs && node tests/phone_speech.test.mjs   # speech clean-up (16)
 node tests/run_all.mjs                                              # every check (49 browser + 104 form checks …)
 python set_version.py && git add -A && git commit && git push
@@ -99,6 +99,6 @@ Local copies never send to the real Sheet unless `?sync` is added (`?sheet=<url>
 ## Open items
 1. Munna: new Sheet + script, send the /exec URL (setup above).
 2. Native review of the draft translations in `lang/hi|kn|te|or|ta|pa.json` (fix there, then `node tools/check_lang.mjs <code>` and `node tools/build_lang.mjs`), or send the team's Excel.
-3. Native review of the #TumBolo drafts, Marathi rephrasings and Marathi screen text.
+3. Native review of the #TumBolo drafts, Marathi rephrasings, Marathi screen text, and the safety and "don't know" words for Kannada, Telugu, Odia, Tamil, Punjabi (`probe.js`).
 4. Assamese is in the team's Info sheet but not on the language screen — not added.
 5. District list (team's SG Dashboard helper) is older in places (e.g. Andhra Pradesh 13 districts, Delhi as one) — update the CSV and run `python tools/make_districts.py` if needed.

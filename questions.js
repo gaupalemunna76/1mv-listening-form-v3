@@ -11,12 +11,12 @@
 //   probe      one follow-up for weak short answers (rules in probe.js)
 //   source     "state" | "district" — dropdown filled from states.js / districts.js
 
-import { FORMS } from "./forms.js?v=20261028-1853";
-import { STATES } from "./states.js?v=20261028-1853";
-import { DISTRICTS } from "./districts.js?v=20261028-1853";
-import { UI } from "./i18n.js?v=20261028-1853";
-import { REPHRASE } from "./rephrase.js?v=20261028-1853";
-import { fill } from "./translations.js?v=20261028-1853";
+import { FORMS } from "./forms.js?v=20261028-1856";
+import { STATES } from "./states.js?v=20261028-1856";
+import { DISTRICTS } from "./districts.js?v=20261028-1856";
+import { UI } from "./i18n.js?v=20261028-1856";
+import { REPHRASE } from "./rephrase.js?v=20261028-1856";
+import { fill } from "./translations.js?v=20261028-1856";
 
 // Text missing from the Excel / hand-written files is filled from translations.js (lang/*.json, drafts for review).
 for (const [k, f] of Object.entries(FORMS)) {

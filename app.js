@@ -1,17 +1,17 @@
 // 1MV Listening Form V3 — one question per screen, Shikshagraha look, eight languages (English where a
 // translation is missing), conditional questions, follow-ups, optional 🔊 listen and 🎤 speak,
 // in-progress answers saved to the Sheet, and confirmed sending with retries.
-import { TOOLS } from "./questions.js?v=20261028-1853";
-import { LANGS, UI, t } from "./i18n.js?v=20261028-1853";
-import { assess, isDistress } from "./probe.js?v=20261028-1853";
-import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1853";
-import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1853";
+import { TOOLS } from "./questions.js?v=20261028-1856";
+import { LANGS, UI, t } from "./i18n.js?v=20261028-1856";
+import { assess, isDistress } from "./probe.js?v=20261028-1856";
+import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1856";
+import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1856";
 
 const params = new URLSearchParams(location.search);
 // Local test copies (localhost) never send to the real Sheet unless ?sync is added; ?sheet=<url> sends to a test receiver.
 const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const SHEET_URL = LOCAL && params.get("sheet") ? params.get("sheet") : LOCAL && !params.has("sync") ? "" : CONFIG_SHEET_URL;
-const VERSION = "20261028-1853";
+const VERSION = "20261028-1856";
 // Own storage keys: V1 lives on the same domain (gaupalemunna76.github.io) and must not see V3 data.
 const DRAFT = "lf3.draft";
 const STORE = "lf3.responses";
