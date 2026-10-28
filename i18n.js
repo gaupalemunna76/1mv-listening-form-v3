@@ -14,7 +14,7 @@ export const LANGS = [
   { code: "mr", name: "मराठी", speech: "mr-IN", tag: "#तुम्हीसांगा", font: "Noto Sans Devanagari" },
 ];
 
-import { fill } from "./translations.js?v=20261028-1652";
+import { fill } from "./translations.js?v=20261028-1853";
 
 const T3 = (en, hi, mr) => ({ en, hi, mr });
 
@@ -84,7 +84,6 @@ export const UI = {
   resume: T3("You have an unfinished form on this device.", "इस डिवाइस पर आपका एक अधूरा फ़ॉर्म है।", "या डिव्हाइसवर तुमचा एक अपूर्ण फॉर्म आहे."),
   resumeYes: T3("Continue it", "उसे पूरा करें", "तो पूर्ण करा"),
   resumeNo: T3("Start fresh", "नया शुरू करें", "नव्याने सुरू करा"),
-  draftNote: T3("", "", "मराठी भाषांतर अजून तपासले जात आहे."),
   notTranslated: T3("Some questions are not yet available in this language, so they are shown in English.",
                     "कुछ सवाल अभी इस भाषा में उपलब्ध नहीं हैं, इसलिए वे अंग्रेज़ी में दिखाए गए हैं।",
                     "काही प्रश्न अजून या भाषेत उपलब्ध नाहीत, त्यामुळे ते इंग्रजीत दाखवले आहेत."),
