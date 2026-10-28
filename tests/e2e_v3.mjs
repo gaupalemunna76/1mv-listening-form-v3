@@ -141,8 +141,12 @@ try {
   await ev(`const s = document.getElementById('langSel'); s.value = 'ta'; s.dispatchEvent(new Event('change')); true`); await sleep(200);
   ok(await ev(`document.getElementById('tag').textContent`) === "#நீங்கசொல்லுங்க", "Tamil #TumBolo after switching");
   await ev(`document.querySelector('[data-form=parent]').click(); true`); await sleep(200);
-  ok((await ev(`document.querySelector('.opening').textContent`)).includes("Every day, our children"), "no Tamil yet: English opening");
-  ok(await ev(`[...document.querySelectorAll('.notice')].some(n => n.textContent.includes('shown in English'))`), "note that questions are in English");
+  ok(/\p{Script=Tamil}/u.test(await ev(`document.querySelector('.opening').textContent`)), "Tamil opening text");
+  ok(!(await ev(`[...document.querySelectorAll('.notice')].some(n => n.textContent.includes('shown in English'))`)), "no 'shown in English' note when translated");
+  ok(/\p{Script=Tamil}/u.test(await ev(`document.getElementById('startBtn').textContent`)), "Tamil Start button");
+  await ev(`document.getElementById('consent').click(); document.getElementById('startBtn').click(); true`); await sleep(300); await ev(helpers);
+  ok(/\p{Script=Tamil}/u.test(await ev(`T.text()`)), "Tamil parent question");
+  ok(/\p{Script=Tamil}/u.test(await ev(`document.querySelector('.opt').textContent`)), "Tamil options");
   const m = await ev(`({ w: document.documentElement.scrollWidth, v: innerWidth })`);
   ok(m.w <= m.v, "no sideways scroll");
 } catch (e) { console.log("FAIL " + e.message); fails++; }

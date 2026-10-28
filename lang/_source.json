@@ -1,0 +1,1332 @@
+{
+ "form.youth.opening": {
+  "en": "Young people are told every day that they are the future of the nation. Now it’s our turn to be their voice of change. \n\nWe want to understand how you see your future. There are no right or wrong answers and this is completely anonymous. We are listening. #TumBolo",
+  "mr": "तरुणांना दररोज सांगितले जाते की ते देशाचे भविष्य आहेत. आता त्यांच्या बदलाचा आवाज बनण्याची वेळ आमची आहे.\n\nतुम्ही तुमचे भविष्य कसे पाहता हे आम्हाला समजून घ्यायचे आहे. यात कोणतीही उत्तरे बरोबर किंवा चुकीची नाहीत आणि हे पूर्णपणे निनावी आहे. आम्ही ऐकत आहोत. #TumBolo #तुम्हीसांगा"
+ },
+ "form.youth.closing": {
+  "en": "Thank you for taking the time to answer these questions. Log onto tumbolo.shikshagraha.org  to see what other youth like you think about their future.",
+  "mr": "या प्रश्नांची उत्तरे देण्यासाठी वेळ दिल्याबद्दल धन्यवाद. तुमच्यासारखे इतर तरुण त्यांच्या भविष्याबद्दल काय विचार करतात हे जाणून घेण्यासाठी https://tumbolo.shikshagraha.org/ ला भेट द्या."
+ },
+ "form.youth.section.demographic-details": {
+  "en": "Demographic Details",
+  "mr": "वैयक्तिक माहिती"
+ },
+ "form.youth.section.future-aspirations": {
+  "en": "Future & Aspirations",
+  "mr": "भविष्य आणि आकांक्षा"
+ },
+ "form.youth.section.readiness-skills": {
+  "en": "Readiness & Skills",
+  "mr": "तयारी आणि कौशल्ये"
+ },
+ "form.youth.section.enabling-environment": {
+  "en": "Enabling Environment",
+  "mr": "पोषक वातावरण"
+ },
+ "form.youth.Q0_1.label": {
+  "en": "Can you please tell me your age?",
+  "mr": "कृपया तुमचे वय सांगा."
+ },
+ "form.youth.Q0_1.opt.O1": {
+  "en": "12-15 years",
+  "mr": "१२-१५ वर्षे"
+ },
+ "form.youth.Q0_1.opt.O2": {
+  "en": "16-21 years",
+  "mr": "१६-२१ वर्षे"
+ },
+ "form.youth.Q0_1.opt.O3": {
+  "en": "22-25 years",
+  "mr": "२२-२५ वर्षे"
+ },
+ "form.youth.Q0_2.label": {
+  "en": "What is your gender?",
+  "mr": "तुमचे लिंग काय आहे?"
+ },
+ "form.youth.Q0_2.opt.O1": {
+  "en": "Male",
+  "mr": "पुरुष"
+ },
+ "form.youth.Q0_2.opt.O2": {
+  "en": "Female",
+  "mr": "स्त्री"
+ },
+ "form.youth.Q0_2.opt.O3": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_2.opt.O4": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.youth.Q0_3.label": {
+  "en": "Which state do you stay in?",
+  "mr": "तुम्ही कोणत्या राज्यात राहता?"
+ },
+ "form.youth.Q0_4.label": {
+  "en": "Which district do you stay in?",
+  "mr": "तुम्ही कोणत्या जिल्ह्यात राहता?"
+ },
+ "form.youth.Q0_5.label": {
+  "en": "Please select the option that best describes what you are currently doing.",
+  "mr": "तुम्ही सध्या काय करत आहात याचे योग्य वर्णन करणारा पर्याय निवडा."
+ },
+ "form.youth.Q0_5.opt.O1": {
+  "en": "In school, grade 6-10",
+  "mr": "शाळेत (इयत्ता ६ वी ते १० वी)"
+ },
+ "form.youth.Q0_5.opt.O2": {
+  "en": "In school, grade 11-12",
+  "mr": "शाळेत / ज्युनियर कॉलेजमध्ये (इयत्ता ११ वी ते १२ वी)"
+ },
+ "form.youth.Q0_5.opt.O3": {
+  "en": "ITI",
+  "mr": "आयटीआय (ITI)"
+ },
+ "form.youth.Q0_5.opt.O4": {
+  "en": "Polytechnic",
+  "mr": "पॉलिटेक्निक (Polytechnic)"
+ },
+ "form.youth.Q0_5.opt.O5": {
+  "en": "Vocational programmes",
+  "mr": "व्यावसायिक अभ्यासक्रम (Vocational programmes)"
+ },
+ "form.youth.Q0_5.opt.O6": {
+  "en": "Pursuing Undergraduate",
+  "mr": "पदवीचे शिक्षण घेत आहे (Undergraduate)"
+ },
+ "form.youth.Q0_5.opt.O7": {
+  "en": "Pursuing Postgraduate",
+  "mr": "पदव्युत्तर शिक्षण घेत आहे (Postgraduate)"
+ },
+ "form.youth.Q0_5.opt.O8": {
+  "en": "Working",
+  "mr": "नोकरी / काम करत आहे"
+ },
+ "form.youth.Q0_5.opt.O9": {
+  "en": "Looking for employment",
+  "mr": "कामाच्या शोधात आहे"
+ },
+ "form.youth.Q0_5.opt.O10": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_5a.label": {
+  "en": "What course or stream are you in?",
+  "mr": "तुम्ही कोणत्या शाखेत शिकत आहात?"
+ },
+ "form.youth.Q0_5a.opt.O1": {
+  "en": "Science",
+  "mr": "विज्ञान (Science)"
+ },
+ "form.youth.Q0_5a.opt.O2": {
+  "en": "Commerce",
+  "mr": "वाणिज्य (Commerce)"
+ },
+ "form.youth.Q0_5a.opt.O3": {
+  "en": "Arts/Humanities",
+  "mr": "कला / मानव्यविद्या (Arts/Humanities)"
+ },
+ "form.youth.Q0_5a.opt.O4": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_5b.label": {
+  "en": "What course or stream are you in?",
+  "mr": "तुम्ही कोणत्या शाखेत किंवा ट्रेडमध्ये आहात?"
+ },
+ "form.youth.Q0_5b.opt.O1": {
+  "en": "Electrical or electronics",
+  "mr": "इलेक्ट्रिकल किंवा इलेक्ट्रॉनिक्स"
+ },
+ "form.youth.Q0_5b.opt.O2": {
+  "en": "Mechanical or manufacturing",
+  "mr": "मेकॅनिकल किंवा मॅन्युफॅक्चरिंग"
+ },
+ "form.youth.Q0_5b.opt.O3": {
+  "en": "Automobile or transport",
+  "mr": "ऑटोमोबाईल किंवा ट्रान्सपोर्ट"
+ },
+ "form.youth.Q0_5b.opt.O4": {
+  "en": "Civil or construction",
+  "mr": "सिव्हिल किंवा कन्स्ट्रक्शन"
+ },
+ "form.youth.Q0_5b.opt.O5": {
+  "en": "Computer or IT",
+  "mr": "कॉम्प्युटर किंवा आयटी"
+ },
+ "form.youth.Q0_5b.opt.O6": {
+  "en": "Healthcare",
+  "mr": "आरोग्य सेवा (Healthcare)"
+ },
+ "form.youth.Q0_5b.opt.O7": {
+  "en": "Beauty",
+  "mr": "ब्युटी आणि वेलनेस (Beauty & Wellness)"
+ },
+ "form.youth.Q0_5b.opt.O8": {
+  "en": "Hospitality",
+  "mr": "हॉस्पिटॅलिटी (हॉटेल मॅनेजमेंट / Hospitality)"
+ },
+ "form.youth.Q0_5b.opt.O9": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_5c.label": {
+  "en": "What course or stream are you in?",
+  "mr": "तुम्ही कोणता अभ्यासक्रम किंवा पदवी घेत आहात?"
+ },
+ "form.youth.Q0_5c.opt.O1": {
+  "en": "Arts (BA or MA)",
+  "mr": "कला (BA किंवा MA)"
+ },
+ "form.youth.Q0_5c.opt.O2": {
+  "en": "Science (B.Sc or M.Sc)",
+  "mr": "विज्ञान (B.Sc किंवा M.Sc)"
+ },
+ "form.youth.Q0_5c.opt.O3": {
+  "en": "Commerce (B.Com or M.Com)",
+  "mr": "वाणिज्य (B.Com किंवा M.Com)"
+ },
+ "form.youth.Q0_5c.opt.O4": {
+  "en": "Technology (B.Tech or M.Tech)",
+  "mr": "इंजिनिअरिंग / टेक्नॉलॉजी (B.E. किंवा B.Tech / M.Tech)"
+ },
+ "form.youth.Q0_5c.opt.O5": {
+  "en": "Business Administration (BBA or MBA)",
+  "mr": "बिझनेस ॲडमिनिस्ट्रेशन (BBA किंवा MBA)"
+ },
+ "form.youth.Q0_5c.opt.O6": {
+  "en": "Computer Applications (BCA or MCA)",
+  "mr": "कॉम्प्युटर ॲप्लिकेशन्स (BCA किंवा MCA)"
+ },
+ "form.youth.Q0_5c.opt.O7": {
+  "en": "Bachelor / Master of Medicine",
+  "mr": "वैद्यकीय (Medicine / MBBS)"
+ },
+ "form.youth.Q0_5c.opt.O8": {
+  "en": "Law (LLB or LLM)",
+  "mr": "कायदा / विधी (LLB किंवा LLM)"
+ },
+ "form.youth.Q0_5c.opt.O9": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_5d.label": {
+  "en": "Where are you currently employed?",
+  "mr": "तुम्ही सध्या कोणत्या क्षेत्रात कार्यरत आहात?"
+ },
+ "form.youth.Q0_5d.opt.O1": {
+  "en": "Agriculture",
+  "mr": "शेती / कृषी (Agriculture)"
+ },
+ "form.youth.Q0_5d.opt.O2": {
+  "en": "Banking & Financial services",
+  "mr": "बँकिंग आणि वित्तीय सेवा"
+ },
+ "form.youth.Q0_5d.opt.O3": {
+  "en": "IT",
+  "mr": "माहिती तंत्रज्ञान (IT)"
+ },
+ "form.youth.Q0_5d.opt.O4": {
+  "en": "Entrepreneur / Business",
+  "mr": "व्यवसाय / उद्योग (Business)"
+ },
+ "form.youth.Q0_5d.opt.O5": {
+  "en": "Social Sector",
+  "mr": "सामाजिक क्षेत्र (Social Sector / NGO)"
+ },
+ "form.youth.Q0_5d.opt.O6": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_6.label": {
+  "en": "Where did you or are you currently studying?",
+  "mr": "तुम्ही सध्या कुठे शिकत आहात किंवा पूर्वी कुठे शिकलात?"
+ },
+ "form.youth.Q0_6.opt.O1": {
+  "en": "Government school",
+  "mr": "सरकारी शाळा"
+ },
+ "form.youth.Q0_6.opt.O2": {
+  "en": "Private school",
+  "mr": "खाजगी शाळा"
+ },
+ "form.youth.Q0_6.opt.O3": {
+  "en": "Government-aided school",
+  "mr": "शासकीय अनुदानित शाळा"
+ },
+ "form.youth.Q0_6.opt.O4": {
+  "en": "NIOS",
+  "mr": "मुक्त शाळा (NIOS)"
+ },
+ "form.youth.Q0_6.opt.O5": {
+  "en": "Homeschool",
+  "mr": "घरीच शिक्षण (Homeschool)"
+ },
+ "form.youth.Q0_6.opt.O6": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q0_7.label": {
+  "en": "How much does your family generally earn in a month?",
+  "mr": "तुमच्या कुटुंबाचे साधारण मासिक उत्पन्न किती आहे?"
+ },
+ "form.youth.Q0_7.opt.O1": {
+  "en": "Less than ₹25,000 per month",
+  "mr": "दरमहा ₹२५,००० पेक्षा कमी"
+ },
+ "form.youth.Q0_7.opt.O2": {
+  "en": "Between ₹25,000 – ₹66,000 per month",
+  "mr": "दरमहा ₹२५,००० ते ₹६६,००० दरम्यान"
+ },
+ "form.youth.Q0_7.opt.O3": {
+  "en": "Between ₹67,000 – ₹83,000 per month",
+  "mr": "दरमहा ₹६७,००० ते ₹८३,००० दरम्यान"
+ },
+ "form.youth.Q0_7.opt.O4": {
+  "en": "Above ₹83,000 per month",
+  "mr": "दरमहा ₹८३,००० पेक्षा जास्त"
+ },
+ "form.youth.Q0_7.opt.O5": {
+  "en": "Not sure",
+  "mr": "नक्की माहित नाही"
+ },
+ "form.youth.Q0_7.opt.O6": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.youth.Q0_8.label": {
+  "en": "Do you have any disabilities? Knowing this will help us understand your experiences better.",
+  "mr": "तुम्हाला काही दिव्यांगत्व (अपंगत्व) आहे का? हे जाणून घेतल्याने तुमचे अनुभव आम्हाला अधिक चांगल्या प्रकारे समजून घेण्यास मदत होईल."
+ },
+ "form.youth.Q0_8.opt.O1": {
+  "en": "Yes",
+  "mr": "होय"
+ },
+ "form.youth.Q0_8.opt.O2": {
+  "en": "No",
+  "mr": "नाही"
+ },
+ "form.youth.Q0_8.opt.O3": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.youth.Q0_8a.label": {
+  "en": "If you are comfortable sharing, could you share what kind of disability it is?",
+  "mr": "जर तुम्हाला सांगण्यास हरकत नसेल, तर ते कोणत्या प्रकारचे दिव्यांगत्व आहे?"
+ },
+ "form.youth.Q0_8a.opt.O1": {
+  "en": "Physical Disability",
+  "mr": "शारीरिक दिव्यांगत्व (Physical Disability)"
+ },
+ "form.youth.Q0_8a.opt.O2": {
+  "en": "Intellectual Disability",
+  "mr": "बौद्धिक दिव्यांगत्व (Intellectual Disability)"
+ },
+ "form.youth.Q0_8a.opt.O3": {
+  "en": "Mental Behaviour",
+  "mr": "मानसिक आरोग्य / वर्तनात्मक (Mental / Behavioural)"
+ },
+ "form.youth.Q0_8a.opt.O4": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.youth.Q1A.label": {
+  "en": "What do you want to be when you're older?",
+  "mr": "मोठे झाल्यावर तुम्हाला काय बनायचे आहे?"
+ },
+ "form.youth.Q1A.lead": {
+  "en": "Thank you for telling me about your background. Now, we'd love to know more on your thoughts about the future.",
+  "mr": "तुमच्याबद्दल माहिती दिल्याबद्दल धन्यवाद. आता आम्हाला भविष्याबद्दलचे तुमचे विचार जाणून घ्यायला आवडेल."
+ },
+ "form.youth.Q1B.label": {
+  "en": "And what kind of a lifestyle would you like to have?",
+  "mr": "आणि तुम्हाला कशा प्रकारची जीवनशैली जगायला आवडेल?"
+ },
+ "form.youth.Q1C.label": {
+  "en": "What would be your ideal monthly income?",
+  "mr": "तुमचे अपेक्षित मासिक उत्पन्न किती असेल?"
+ },
+ "form.youth.Q2.label": {
+  "en": "How confident are you feeling about achieving what you just shared?",
+  "mr": "तुम्ही आत्ता जे सांगितले ते साध्य करण्याबाबत तुम्हाला किती आत्मविश्वास वाटतो?"
+ },
+ "form.youth.Q2.opt.O1": {
+  "en": "Very confident",
+  "mr": "पूर्ण आत्मविश्वास आहे"
+ },
+ "form.youth.Q2.opt.O2": {
+  "en": "Somewhat confident",
+  "mr": "थोडाफार आत्मविश्वास आहे"
+ },
+ "form.youth.Q2.opt.O3": {
+  "en": "Unsure",
+  "mr": "खात्री नाही"
+ },
+ "form.youth.Q3.label": {
+  "en": "Which are 3 most important skills you think you would need to learn to achieve the future you want?",
+  "mr": "तुम्हाला हवे असलेले भविष्य मिळवण्यासाठी तुम्हाला कोणती ३ महत्त्वाची कौशल्ये शिकावी लागतील असे वाटते?"
+ },
+ "form.youth.Q4.label": {
+  "en": "To what extent are you getting the chance to learn the skills you shared above?",
+  "mr": "तुम्ही वर नमूद केलेली कौशल्ये शिकण्याची संधी तुम्हाला कितपत मिळत आहे?"
+ },
+ "form.youth.Q4.opt.O1": {
+  "en": "I am not getting any chance to learn these skills",
+  "mr": "मला ही कौशल्ये शिकण्याची कोणतीही संधी मिळत नाहीये"
+ },
+ "form.youth.Q4.opt.O2": {
+  "en": "I am getting only a few opportunities to learn these skills",
+  "mr": "मला ही कौशल्ये शिकण्याच्या मोजक्याच संधी मिळत आहेत"
+ },
+ "form.youth.Q4.opt.O3": {
+  "en": "I am getting good opportunities to learn these skills",
+  "mr": "मला ही कौशल्ये शिकण्याच्या चांगल्या संधी मिळत आहेत"
+ },
+ "form.youth.Q4.opt.O4": {
+  "en": "I have multiple opportunities and I feel well supported in learning these skills",
+  "mr": "मला भरपूर संधी मिळत आहेत आणि ही कौशल्ये शिकण्यासाठी उत्तम पाठबळ मिळत आहे"
+ },
+ "form.youth.Q5.label": {
+  "en": "How are you getting to learn these skills? Please share some examples.",
+  "mr": "तुम्हाला ही कौशल्ये कशी शिकायला मिळत आहेत? कृपया काही उदाहरणे द्या."
+ },
+ "form.youth.Q6.label": {
+  "en": "What are some challenges or difficulties that you might face in achieving the future that you shared about?",
+  "mr": "तुम्ही सांगितलेले भविष्य साध्य करताना तुम्हाला कोणत्या अडचणी किंवा आव्हानांचा सामना करावा लागू शकतो?"
+ },
+ "form.youth.Q7.label": {
+  "en": "If you could change one thing about your school experience what would it be?",
+  "mr": "जर तुम्हाला तुमच्या शाळेच्या अनुभवात एखादी गोष्ट बदलण्याची संधी मिळाली, तर ती कोणती असेल?"
+ },
+ "form.youth.Q8.label": {
+  "en": "As a final thought we would love to know, what's one thing you would like to do to help make education better for young people like you?",
+  "mr": "शेवटचा विचार म्हणून - तुमच्यासारख्या तरुणांसाठी शिक्षण अधिक चांगले बनवण्यासाठी तुम्ही स्वतः काय करू इच्छिता?"
+ },
+ "form.parent.opening": {
+  "en": "Every day, our children are told they are the future of the nation. As parents, you see their hopes, worries, and dreams up close. Now it's your turn to be heard.\n\nWe want to understand how you see your child's future and what they will need to thrive. There are no right or wrong answers, and this survey is completely anonymous. We are listening.  #TumBolo",
+  "mr": "दररोज आपल्या मुलांना सांगितले जाते की ती देशाचे भविष्य आहेत. पालक म्हणून त्यांच्या आशा, चिंता आणि स्वप्ने तुम्ही अगदी जवळून पाहता. आता तुमचे म्हणणे मांडण्याची वेळ आली आहे.\n\nतुम्ही तुमच्या मुलाच्या भविष्याकडे कसे पाहता आणि त्यांच्या प्रगतीसाठी त्यांना कशाची गरज भासेल, हे आम्हाला समजून घ्यायचे आहे. यात कोणतीही उत्तरे बरोबर किंवा चुकीची नाहीत आणि हे सर्वेक्षण पूर्णपणे निनावी आहे. आम्ही ऐकत आहोत. #TumBolo #तुम्हीसांगा"
+ },
+ "form.parent.closing": {
+  "en": "Thank you for taking the time to answer these questions. Log onto tumbolo.shikshagraha.org to see what other parents like you think about the future of the youth.",
+  "mr": "या प्रश्नांची उत्तरे देण्यासाठी वेळ दिल्याबद्दल धन्यवाद. तुमच्यासारखे इतर पालक मुलांच्या भविष्याबद्दल काय विचार करतात हे जाणून घेण्यासाठी https://tumbolo.shikshagraha.org/ ला भेट द्या."
+ },
+ "form.parent.section.demographic-details": {
+  "en": "Demographic details",
+  "mr": "वैयक्तिक माहिती"
+ },
+ "form.parent.section.student-learning-outcomes-and-well-being-as-perceived-by-parents": {
+  "en": "Student learning outcomes and well‑being (as perceived by parents)",
+  "mr": "शिकण्याची प्रगती आणि समाधान"
+ },
+ "form.parent.section.future-orientation-college-and-career-readiness-education-continuity": {
+  "en": "Future orientation: college and career readiness (education continuity)",
+  "mr": "भविष्याची दिशा"
+ },
+ "form.parent.section.parents-expectations": {
+  "en": "Parents’ expectations",
+  "mr": "पालकांच्या अपेक्षा"
+ },
+ "form.parent.section.parent-role-construction-efficacy-capacity": {
+  "en": "Parent role construction, efficacy, capacity",
+  "mr": "पालकांची भूमिका"
+ },
+ "form.parent.Q1.label": {
+  "en": "What is your relationship to the child?",
+  "mr": "पाल्याशी तुमचे नाते काय आहे?"
+ },
+ "form.parent.Q1.opt.O1": {
+  "en": "Mother",
+  "mr": "आई"
+ },
+ "form.parent.Q1.opt.O2": {
+  "en": "Father",
+  "mr": "वडील"
+ },
+ "form.parent.Q1.opt.O3": {
+  "en": "Grandparent",
+  "mr": "आजी / आजोबा"
+ },
+ "form.parent.Q1.opt.O4": {
+  "en": "Other relative",
+  "mr": "इतर नातेवाईक"
+ },
+ "form.parent.Q1.opt.O5": {
+  "en": "Other guardian",
+  "mr": "इतर पालक / संरक्षक"
+ },
+ "form.parent.Q2.label": {
+  "en": "Which school or college does your child study in?",
+  "mr": "तुमचे मूल कोणत्या प्रकारच्या शाळा किंवा कॉलेजमध्ये शिकते?"
+ },
+ "form.parent.Q2.opt.O1": {
+  "en": "Government",
+  "mr": "सरकारी"
+ },
+ "form.parent.Q2.opt.O2": {
+  "en": "Government-aided",
+  "mr": "शासकीय अनुदानित"
+ },
+ "form.parent.Q2.opt.O3": {
+  "en": "Private",
+  "mr": "खाजगी"
+ },
+ "form.parent.Q3.label": {
+  "en": "Which state does your child stay in?",
+  "mr": "तुमचे मूल कोणत्या राज्यात राहते?"
+ },
+ "form.parent.Q4.label": {
+  "en": "Which district does your child stay in?",
+  "mr": "तुमचे मूल कोणत्या जिल्ह्यात राहते?"
+ },
+ "form.parent.Q5.label": {
+  "en": "What is your child's gender?",
+  "mr": "तुमच्या मुलाचे/मुलीचे लिंग काय आहे?"
+ },
+ "form.parent.Q5.opt.O1": {
+  "en": "Boy",
+  "mr": "मुलगा"
+ },
+ "form.parent.Q5.opt.O2": {
+  "en": "Girl",
+  "mr": "मुलगी"
+ },
+ "form.parent.Q5.opt.O3": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.parent.Q5.opt.O4": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.parent.Q6.label": {
+  "en": "In which class does your child study?",
+  "mr": "तुमचे मूल कोणत्या वर्गात शिकते?"
+ },
+ "form.parent.Q6.opt.O1": {
+  "en": "Primary (Classes 1-5)",
+  "mr": "प्राथमिक (इयत्ता १ ली ते ५ वी)"
+ },
+ "form.parent.Q6.opt.O2": {
+  "en": "Middle (Classes 6-8)",
+  "mr": "उच्च प्राथमिक (इयत्ता ६ वी ते ८ वी)"
+ },
+ "form.parent.Q6.opt.O3": {
+  "en": "Secondary (classes 9-10)",
+  "mr": "माध्यमिक (इयत्ता ९ वी ते १० वी)"
+ },
+ "form.parent.Q6.opt.O4": {
+  "en": "Higher secondary (classes 11-12)",
+  "mr": "उच्च माध्यमिक / ज्युनियर कॉलेज (इयत्ता ११ वी ते १२ वी)"
+ },
+ "form.parent.Q6.opt.O5": {
+  "en": "College or university",
+  "mr": "कॉलेज किंवा विद्यापीठ"
+ },
+ "form.parent.Q7.label": {
+  "en": "Does your child have any disability?  Knowing this will help us understand your experiences better.",
+  "mr": "तुमच्या मुलाला काही दिव्यांगत्व (अपंगत्व) आहे का? हे जाणून घेतल्याने तुमचे अनुभव आम्हाला अधिक चांगल्या प्रकारे समजून घेण्यास मदत होईल."
+ },
+ "form.parent.Q7.opt.O1": {
+  "en": "Yes",
+  "mr": "होय"
+ },
+ "form.parent.Q7.opt.O2": {
+  "en": "No",
+  "mr": "नाही"
+ },
+ "form.parent.Q7.opt.O3": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.parent.Q8A.label": {
+  "en": "Did you get an opportunity to go to school or college?",
+  "mr": "तुम्हाला स्वतःला शाळा किंवा कॉलेजमध्ये जाण्याची संधी मिळाली होती का?"
+ },
+ "form.parent.Q8A.opt.O1": {
+  "en": "Yes",
+  "mr": "होय"
+ },
+ "form.parent.Q8A.opt.O2": {
+  "en": "No",
+  "mr": "नाही"
+ },
+ "form.parent.Q8B.label": {
+  "en": "Till where did you study?",
+  "mr": "तुमचे शिक्षण कुठपर्यंत झाले आहे?"
+ },
+ "form.parent.Q8B.opt.O1": {
+  "en": "Primary (up to Class 5)",
+  "mr": "प्राथमिक (इयत्ता ५ वी पर्यंत)"
+ },
+ "form.parent.Q8B.opt.O2": {
+  "en": "Middle (Class 6 to 8)",
+  "mr": "उच्च प्राथमिक (इयत्ता ६ वी ते ८ वी)"
+ },
+ "form.parent.Q8B.opt.O3": {
+  "en": "Secondary (Class 9 to 10)",
+  "mr": "माध्यमिक (इयत्ता ९ वी ते १० वी)"
+ },
+ "form.parent.Q8B.opt.O4": {
+  "en": "Higher secondary (Class 11 to 12)",
+  "mr": "उच्च माध्यमिक / ज्युनियर कॉलेज (इयत्ता ११ वी ते १२ वी)"
+ },
+ "form.parent.Q8B.opt.O5": {
+  "en": "Diploma or ITI",
+  "mr": "डिप्लोमा किंवा आयटीआय"
+ },
+ "form.parent.Q8B.opt.O6": {
+  "en": "Undergraduate (Bachelor's degree)",
+  "mr": "पदवी (Bachelor's degree)"
+ },
+ "form.parent.Q8B.opt.O7": {
+  "en": "Postgraduate or higher",
+  "mr": "पदव्युत्तर किंवा त्याहून अधिक"
+ },
+ "form.parent.Q8B.opt.O8": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.parent.Q9A.label": {
+  "en": "How satisfied are you with how your child is doing in studies?",
+  "mr": "तुमचा मुलगा/मुलगी सध्या जसा अभ्यास करत आहे, त्याबद्दल तुम्ही किती समाधानी आहात?"
+ },
+ "form.parent.Q9A.lead": {
+  "en": "Thank you for sharing these details about you and your child. Now, we'd love to hear your thoughts about your child's future.",
+  "mr": "तुमच्याबद्दल आणि पाल्याबद्दल माहिती दिल्याबद्दल धन्यवाद. आता आम्हाला तुमच्या मुलाच्या भविष्याबद्दलचे तुमचे विचार जाणून घ्यायला आवडतील."
+ },
+ "form.parent.Q9A.opt.O1": {
+  "en": "Very satisfied",
+  "mr": "खूप समाधानी"
+ },
+ "form.parent.Q9A.opt.O2": {
+  "en": "Somewhat Satisfied",
+  "mr": "काही प्रमाणात समाधानी"
+ },
+ "form.parent.Q9A.opt.O3": {
+  "en": "Somewhat unsatisfied",
+  "mr": "काही प्रमाणात असमाधानी"
+ },
+ "form.parent.Q9A.opt.O4": {
+  "en": "Unsatisfied",
+  "mr": "असमाधानी"
+ },
+ "form.parent.Q9A.opt.O5": {
+  "en": "Not sure",
+  "mr": "खात्री नाही"
+ },
+ "form.parent.Q9B.label": {
+  "en": "Please share why you think so.",
+  "mr": "तुम्हाला असे का वाटते ते कृपया सांगा."
+ },
+ "form.parent.Q10.label": {
+  "en": "What do you wish for your child to do when they grow up?",
+  "mr": "तुमच्या मुलाने मोठे झाल्यावर काय करावे अशी तुमची इच्छा आहे?"
+ },
+ "form.parent.Q11.label": {
+  "en": "And towards that, what changes would you like to see in schools or colleges to better prepare children for their future?",
+  "mr": "आणि त्यासाठी, मुलांना त्यांच्या भविष्यासाठी अधिक चांगल्या प्रकारे तयार करण्यासाठी शाळा किंवा कॉलेजमध्ये कोणते बदल व्हावेत असे तुम्हाला वाटते?"
+ },
+ "form.parent.Q12.label": {
+  "en": "What all do you do to support your child's future?",
+  "mr": "मुलाच्या भविष्यासाठी तुम्ही स्वतः काय काय करता?"
+ },
+ "form.parent.Q13.label": {
+  "en": "As a final thought, what do you think would help your child most to have a successful future?",
+  "mr": "शेवटचा विचार म्हणून - तुमच्या मुलाचे भविष्य यशस्वी होण्यासाठी कोणत्या गोष्टीची सर्वात जास्त मदत होईल असे तुम्हाला वाटते?"
+ },
+ "form.public.opening": {
+  "en": "Young people are told every day that they are the future of the nation. But that future is shaped by all of us. Now it's your turn to share your view.\n\nWe want to understand what you think young people need to thrive in the years ahead. There are no right or wrong answers, and this survey is completely anonymous. We are listening. #TumBolo",
+  "mr": "तरुणांना दररोज सांगितले जाते की ते देशाचे भविष्य आहेत. पण ते भविष्य आपण सर्वजण मिळून घडवतो. आता तुमचे मत मांडण्याची तुमची वेळ आली आहे.\n\nयेत्या काळात तरुणांची प्रगती होण्यासाठी त्यांना कशाची गरज आहे, याबद्दल तुमचे मत काय आहे हे आम्हाला जाणून घ्यायचे आहे. यात कोणतीही उत्तरे बरोबर किंवा चुकीची नाहीत आणि हे सर्वेक्षण पूर्णपणे निनावी आहे. आम्ही ऐकत आहोत. #TumBolo #तुम्हीसांगा"
+ },
+ "form.public.closing": {
+  "en": "Thank you for taking the time to answer these questions. Log onto tumbolo.shikshagraha.org to see what other people like you think about the future of the youth.",
+  "mr": "या प्रश्नांची उत्तरे देण्यासाठी वेळ दिल्याबद्दल धन्यवाद. देशातील इतर नागरिक आणि तरुण भविष्याबद्दल काय विचार करतात हे जाणून घेण्यासाठी https://tumbolo.shikshagraha.org/ ला भेट द्या."
+ },
+ "form.public.section.demographic-details": {
+  "en": "Demographic Details",
+  "mr": "वैयक्तिक माहिती"
+ },
+ "form.public.section.future-aspirations": {
+  "en": "Future & Aspirations",
+  "mr": "भविष्य आणि आकांक्षा"
+ },
+ "form.public.section.readiness-and-skills": {
+  "en": "Readiness and Skills",
+  "mr": "तयारी आणि कौशल्ये"
+ },
+ "form.public.section.enabling-environment": {
+  "en": "Enabling Environment",
+  "mr": "पोषक वातावरण"
+ },
+ "form.public.Q0_1.label": {
+  "en": "How old are you?",
+  "mr": "तुमचे वय किती आहे?"
+ },
+ "form.public.Q0_1.opt.O1": {
+  "en": "26-29",
+  "mr": "२६-२९"
+ },
+ "form.public.Q0_1.opt.O2": {
+  "en": "30-34",
+  "mr": "३०-३४"
+ },
+ "form.public.Q0_1.opt.O3": {
+  "en": "35-39",
+  "mr": "३५-३९"
+ },
+ "form.public.Q0_1.opt.O4": {
+  "en": "40-44",
+  "mr": "४०-४४"
+ },
+ "form.public.Q0_1.opt.O5": {
+  "en": "45-49",
+  "mr": "४५-४९"
+ },
+ "form.public.Q0_1.opt.O6": {
+  "en": "50-54",
+  "mr": "५०-५४"
+ },
+ "form.public.Q0_1.opt.O7": {
+  "en": "55-59",
+  "mr": "५५-५९"
+ },
+ "form.public.Q0_1.opt.O8": {
+  "en": "60 and above",
+  "mr": "६० आणि त्याहून अधिक"
+ },
+ "form.public.Q0_2.label": {
+  "en": "What is your gender?",
+  "mr": "तुमचे लिंग काय आहे?"
+ },
+ "form.public.Q0_2.opt.O1": {
+  "en": "Male",
+  "mr": "पुरुष"
+ },
+ "form.public.Q0_2.opt.O2": {
+  "en": "Female",
+  "mr": "स्त्री"
+ },
+ "form.public.Q0_2.opt.O3": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.public.Q0_2.opt.O4": {
+  "en": "Prefer not to say",
+  "mr": "सांगू इच्छित नाही"
+ },
+ "form.public.Q0_3.label": {
+  "en": "Which state do you stay in?",
+  "mr": "तुम्ही कोणत्या राज्यात राहता?"
+ },
+ "form.public.Q0_4.label": {
+  "en": "Which district do you stay in?",
+  "mr": "तुम्ही कोणत्या जिल्ह्यात राहता?"
+ },
+ "form.public.Q0_5.label": {
+  "en": "What do you currently do - your work or occupation?",
+  "mr": "तुम्ही सध्या काय करता - तुमचे काम किंवा व्यवसाय काय आहे?"
+ },
+ "form.public.Q0_5.opt.O1": {
+  "en": "Agriculture",
+  "mr": "शेती / कृषी"
+ },
+ "form.public.Q0_5.opt.O2": {
+  "en": "Banking & Financial services",
+  "mr": "बँकिंग आणि वित्तीय सेवा"
+ },
+ "form.public.Q0_5.opt.O3": {
+  "en": "IT",
+  "mr": "माहिती तंत्रज्ञान (IT)"
+ },
+ "form.public.Q0_5.opt.O4": {
+  "en": "Entrepreneur / Business",
+  "mr": "व्यवसाय / उद्योग"
+ },
+ "form.public.Q0_5.opt.O5": {
+  "en": "Social Sector",
+  "mr": "सामाजिक क्षेत्र (Social Sector / NGO)"
+ },
+ "form.public.Q0_5.opt.O6": {
+  "en": "Other",
+  "mr": "इतर"
+ },
+ "form.public.Q1.label": {
+  "en": "I'd like to hear what you think. How is life different for young people today compared to when you were younger?",
+  "mr": "आम्हाला तुमचे विचार जाणून घ्यायला आवडतील. तुम्ही तरुण असतानाचे आयुष्य आणि आजच्या तरुणांचे आयुष्य यात काय फरक आहे असे तुम्हाला वाटते?"
+ },
+ "form.public.Q2.label": {
+  "en": "Which are the top 3 skills you think young people need to learn to thrive in the future?",
+  "mr": "भविष्यात यशस्वी होण्यासाठी तरुणांनी कोणती ३ महत्त्वाची कौशल्ये शिकणे आवश्यक आहे असे तुम्हाला वाटते?"
+ },
+ "form.public.Q3.label": {
+  "en": "What is your one biggest hope for young people around you?",
+  "mr": "तुमच्या आजूबाजूच्या तरुणांकडून तुमची सर्वात मोठी आशा काय आहे?"
+ },
+ "form.public.Q3.lead": {
+  "en": "Thank you for sharing your thoughts!",
+  "mr": "तुमचे विचार मांडल्याबद्दल धन्यवाद!"
+ },
+ "form.public.Q4.label": {
+  "en": "What is your one biggest worry for young people around you?",
+  "mr": "तुमच्या आजूबाजूच्या तरुणांबद्दल तुमची सर्वात मोठी काळजी किंवा चिंता काय आहे?"
+ },
+ "form.public.Q5.label": {
+  "en": "What do you think you can do to help young people have a successful future?",
+  "mr": "तरुणांचे भविष्य यशस्वी करण्यासाठी तुम्ही काय करू शकता असे तुम्हाला वाटते?"
+ },
+ "form.public.Q5.lead": {
+  "en": "Thanks for sharing this!",
+  "mr": "माहिती दिल्याबद्दल धन्यवाद!"
+ },
+ "rephrase.youth.5": {
+  "en": "Where, or from whom, are you learning these skills? Please give one or two examples.",
+  "mr": "ही कौशल्ये तुम्ही कुठे किंवा कोणाकडून शिकत आहात? कृपया एक-दोन उदाहरणे सांगा."
+ },
+ "rephrase.youth.6": {
+  "en": "What difficulties do you think could come in the way of reaching that future? Please explain a little.",
+  "mr": "ते भविष्य गाठताना तुमच्या वाटेत कोणत्या अडचणी येऊ शकतात असे तुम्हाला वाटते? थोडे सविस्तर सांगा."
+ },
+ "rephrase.youth.7": {
+  "en": "What is one thing about your school experience that you would change, and why?",
+  "mr": "तुमच्या शाळेच्या अनुभवातील कोणती एक गोष्ट तुम्ही बदलाल, आणि का?"
+ },
+ "rephrase.youth.8": {
+  "en": "What is one thing you yourself would like to do to make education better for young people like you? Please describe it a little.",
+  "mr": "तुमच्यासारख्या तरुणांसाठी शिक्षण अधिक चांगले करण्यासाठी तुम्ही स्वतः कोणती एक गोष्ट करू इच्छिता? थोडे सविस्तर सांगा."
+ },
+ "rephrase.youth.1A": {
+  "en": "Could you describe what you would like to become, and what kind of work you see yourself doing?",
+  "mr": "तुम्हाला मोठेपणी काय बनायला आवडेल आणि कोणत्या प्रकारचे काम करताना तुम्ही स्वतःला पाहता, ते थोडे सविस्तर सांगाल का?"
+ },
+ "rephrase.youth.1B": {
+  "en": "Could you describe the kind of life you would like to live? For example, where you would live, who with, and how you would spend your days.",
+  "mr": "तुम्हाला कसे आयुष्य जगायला आवडेल, ते थोडे सविस्तर सांगाल का? उदा. कुठे राहायला, कोणासोबत आणि दिवस कसा घालवायला आवडेल."
+ },
+ "rephrase.parent.10": {
+  "en": "What would you like your child to become or do in the future? Please describe a little.",
+  "mr": "तुमच्या मुलाने भविष्यात काय बनावे किंवा काय करावे असे तुम्हाला वाटते? थोडे सविस्तर सांगा."
+ },
+ "rephrase.parent.11": {
+  "en": "What changes in schools or colleges would help children get ready for their future? Please give an example.",
+  "mr": "मुलांना भविष्यासाठी तयार करण्यासाठी शाळा किंवा कॉलेजमध्ये कोणते बदल उपयोगी ठरतील? कृपया एखादे उदाहरण द्या."
+ },
+ "rephrase.parent.12": {
+  "en": "What are the things you do, at home or outside, to support your child's future? Please share some examples.",
+  "mr": "तुमच्या मुलाच्या भविष्यासाठी तुम्ही घरी किंवा बाहेर कोणत्या गोष्टी करता? कृपया काही उदाहरणे सांगा."
+ },
+ "rephrase.parent.13": {
+  "en": "In your view, what would help your child the most to have a successful future, and why?",
+  "mr": "तुमच्या मते, तुमच्या मुलाचे भविष्य यशस्वी होण्यासाठी सर्वात जास्त कशाची मदत होईल, आणि का?"
+ },
+ "rephrase.parent.9B": {
+  "en": "What makes you feel this way about how your child is doing in studies? Please share a little more.",
+  "mr": "तुमचे मूल अभ्यासात जसे करत आहे, त्याबद्दल तुम्हाला असे का वाटते? थोडे अधिक सांगा."
+ },
+ "rephrase.public.1": {
+  "en": "In what ways is life for young people today different from when you were young? Please share an example.",
+  "mr": "तुम्ही तरुण असताना आणि आजच्या तरुणांच्या आयुष्यात कोणत्या बाबतीत फरक आहे? कृपया एखादे उदाहरण द्या."
+ },
+ "rephrase.public.3": {
+  "en": "What is the one thing you hope for most for the young people around you? Please tell us a little more.",
+  "mr": "तुमच्या आजूबाजूच्या तरुणांबद्दल तुमची सर्वात मोठी आशा कोणती? थोडे अधिक सांगा."
+ },
+ "rephrase.public.4": {
+  "en": "What worries you the most about the young people around you, and why?",
+  "mr": "तुमच्या आजूबाजूच्या तरुणांबद्दल तुम्हाला सर्वात जास्त कशाची काळजी वाटते, आणि का?"
+ },
+ "rephrase.public.5": {
+  "en": "What is one thing you could do to help young people have a successful future? Please describe it a little.",
+  "mr": "तरुणांचे भविष्य यशस्वी व्हावे यासाठी तुम्ही कोणती एक गोष्ट करू शकता? थोडे सविस्तर सांगा."
+ },
+ "ui.appName": {
+  "en": "1 Million Voices",
+  "mr": "१० लाख आवाज",
+  "hi": "10 लाख आवाज़ें"
+ },
+ "ui.startTitle": {
+  "en": "How do you see the future of young people?",
+  "mr": "तुम्ही तरुणांच्या भविष्याकडे कसे पाहता?",
+  "hi": "आप युवाओं के भविष्य को कैसे देखते हैं?"
+ },
+ "ui.startLead": {
+  "en": "A short form with simple questions. Type your answers, or tap 🎤 to speak them. Tap 🔊 to hear any question.",
+  "mr": "सोप्या प्रश्नांचा छोटा फॉर्म. उत्तरे लिहा, किंवा 🎤 दाबून बोला. कोणताही प्रश्न ऐकण्यासाठी 🔊 दाबा.",
+  "hi": "आसान सवालों वाला एक छोटा फ़ॉर्म। जवाब लिखें, या 🎤 दबाकर बोलें। कोई भी सवाल सुनने के लिए 🔊 दबाएँ।"
+ },
+ "ui.stepLang": {
+  "en": "1. Choose a language",
+  "mr": "१. भाषा निवडा",
+  "hi": "1. भाषा चुनें"
+ },
+ "ui.stepForm": {
+  "en": "2. Choose the form that fits you",
+  "mr": "२. तुम्हाला लागू होणारा फॉर्म निवडा",
+  "hi": "2. वह फ़ॉर्म चुनें जो आप पर लागू होता है"
+ },
+ "ui.stepStart": {
+  "en": "3. Before you start",
+  "mr": "३. सुरू करण्यापूर्वी",
+  "hi": "3. शुरू करने से पहले"
+ },
+ "ui.pickYouth": {
+  "en": "I am 12–25 years old",
+  "mr": "माझे वय १२–२५ वर्षे आहे",
+  "hi": "मेरी उम्र 12–25 साल है"
+ },
+ "ui.pickParent": {
+  "en": "I am a parent or guardian of a child in school or college",
+  "mr": "मी शाळेत किंवा कॉलेजमध्ये शिकणाऱ्या मुलाचा/मुलीचा पालक आहे",
+  "hi": "मैं स्कूल या कॉलेज जाने वाले बच्चे का माता-पिता या अभिभावक हूँ"
+ },
+ "ui.titleYouth": {
+  "en": "Youth",
+  "mr": "तरुण",
+  "hi": "युवा"
+ },
+ "ui.titleParent": {
+  "en": "Parent or guardian",
+  "mr": "पालक",
+  "hi": "माता-पिता या अभिभावक"
+ },
+ "ui.titlePublic": {
+  "en": "General public",
+  "mr": "सर्वसामान्य नागरिक",
+  "hi": "आम जनता"
+ },
+ "ui.pickPublic": {
+  "en": "I am an adult (26 or older)",
+  "mr": "मी प्रौढ आहे (२६ किंवा जास्त)",
+  "hi": "मैं वयस्क हूँ (26 या उससे ज़्यादा)"
+ },
+ "ui.privacy": {
+  "en": "Your answers are anonymous. Please do not write your name, phone number or address anywhere in the form.",
+  "mr": "तुमची उत्तरे निनावी राहतील. कृपया फॉर्ममध्ये कुठेही तुमचे नाव, फोन नंबर किंवा पत्ता लिहू नका.",
+  "hi": "आपके जवाब गुमनाम रहेंगे। कृपया फ़ॉर्म में कहीं भी अपना नाम, फ़ोन नंबर या पता न लिखें।"
+ },
+ "ui.consent": {
+  "en": "I agree to share my answers for this study.",
+  "mr": "या अभ्यासासाठी माझी उत्तरे देण्यास मी सहमत आहे.",
+  "hi": "मैं इस अध्ययन के लिए अपने जवाब देने के लिए सहमत हूँ।"
+ },
+ "ui.start": {
+  "en": "Start",
+  "mr": "सुरू करा",
+  "hi": "शुरू करें"
+ },
+ "ui.pickFormFirst": {
+  "en": "Choose a form above to start.",
+  "mr": "सुरू करण्यासाठी वरून एक फॉर्म निवडा.",
+  "hi": "शुरू करने के लिए ऊपर से एक फ़ॉर्म चुनें।"
+ },
+ "ui.next": {
+  "en": "Next",
+  "mr": "पुढे",
+  "hi": "आगे"
+ },
+ "ui.back": {
+  "en": "Back",
+  "mr": "मागे",
+  "hi": "पीछे"
+ },
+ "ui.submit": {
+  "en": "Submit",
+  "mr": "सबमिट करा",
+  "hi": "जमा करें"
+ },
+ "ui.listen": {
+  "en": "Listen",
+  "mr": "ऐका",
+  "hi": "सुनें"
+ },
+ "ui.stopListen": {
+  "en": "Stop",
+  "mr": "थांबवा",
+  "hi": "रोकें"
+ },
+ "ui.qOf": {
+  "en": "Question {i} of {n}",
+  "mr": "प्रश्न {i} / {n}",
+  "hi": "सवाल {i} / {n}"
+ },
+ "ui.required": {
+  "en": "Required",
+  "mr": "आवश्यक",
+  "hi": "ज़रूरी"
+ },
+ "ui.requiredError": {
+  "en": "Please answer this question.",
+  "mr": "कृपया या प्रश्नाचे उत्तर द्या.",
+  "hi": "कृपया इस सवाल का जवाब दें।"
+ },
+ "ui.numberError": {
+  "en": "Please enter a number between {min} and {max}.",
+  "mr": "कृपया {min} ते {max} मधील संख्या लिहा.",
+  "hi": "कृपया {min} से {max} के बीच कोई संख्या लिखें।"
+ },
+ "ui.choose": {
+  "en": "Choose",
+  "mr": "निवडा",
+  "hi": "चुनें"
+ },
+ "ui.chooseMany": {
+  "en": "You can choose more than one.",
+  "mr": "तुम्ही एकापेक्षा जास्त निवडू शकता.",
+  "hi": "आप एक से ज़्यादा चुन सकते हैं।"
+ },
+ "ui.other": {
+  "en": "Other:",
+  "mr": "इतर:",
+  "hi": "अन्य:"
+ },
+ "ui.yourAnswer": {
+  "en": "Type your answer here",
+  "mr": "तुमचे उत्तर इथे लिहा",
+  "hi": "अपना जवाब यहाँ लिखें"
+ },
+ "ui.probeEmpty": {
+  "en": "You left this blank. Your answer really helps us.",
+  "mr": "तुम्ही हे रिकामे सोडले आहे. तुमचे उत्तर आमच्यासाठी खूप महत्त्वाचे आहे.",
+  "hi": "आपने यह खाली छोड़ा है। आपका जवाब हमारे लिए बहुत काम का है।"
+ },
+ "ui.probeShort": {
+  "en": "Thank you. Could you tell us a little more?",
+  "mr": "धन्यवाद. थोडे अधिक सांगाल का?",
+  "hi": "धन्यवाद। क्या आप थोड़ा और बता सकते हैं?"
+ },
+ "ui.probeVague": {
+  "en": "Thank you, that's a start. Could you be more specific?",
+  "mr": "धन्यवाद, ही चांगली सुरुवात आहे. थोडे अधिक नेमके सांगाल का?",
+  "hi": "धन्यवाद, यह अच्छी शुरुआत है। क्या आप थोड़ा और साफ़ बता सकते हैं?"
+ },
+ "ui.probeUnclear": {
+  "en": "We could not understand this answer.",
+  "mr": "आम्हाला हे उत्तर समजले नाही.",
+  "hi": "हम यह जवाब समझ नहीं पाए।"
+ },
+ "ui.probeRephrase": {
+  "en": "Thank you! Could you say a little more? Let us ask it another way:",
+  "mr": "धन्यवाद! थोडे अधिक सांगाल का? हाच प्रश्न वेगळ्या शब्दांत:",
+  "hi": "धन्यवाद! क्या आप थोड़ा और बता सकते हैं? हम इसे दूसरे तरीके से पूछते हैं:"
+ },
+ "ui.probeSkipNote": {
+  "en": "If you prefer not to add more, press Next again.",
+  "mr": "अधिक लिहायचे नसेल, तर पुन्हा \"पुढे\" दाबा.",
+  "hi": "अगर आप और नहीं लिखना चाहते, तो फिर से \"आगे\" दबाएँ।"
+ },
+ "ui.moreHere": {
+  "en": "Write a bit more here",
+  "mr": "इथे थोडे अधिक लिहा",
+  "hi": "यहाँ थोड़ा और लिखें"
+ },
+ "ui.micStart": {
+  "en": "Speak your answer",
+  "mr": "बोलून उत्तर द्या",
+  "hi": "बोलकर जवाब दें"
+ },
+ "ui.micStop": {
+  "en": "Listening… tap the mic to stop",
+  "mr": "ऐकत आहोत… थांबवण्यासाठी माइक दाबा",
+  "hi": "सुन रहे हैं… रोकने के लिए माइक दबाएँ"
+ },
+ "ui.micAgain": {
+  "en": "Tap the mic again to add more. You can also edit the text.",
+  "mr": "आणखी जोडण्यासाठी माइक पुन्हा दाबा. लिहिलेला मजकूर तुम्ही बदलूही शकता.",
+  "hi": "और जोड़ने के लिए माइक फिर से दबाएँ। आप लिखा हुआ बदल भी सकते हैं।"
+ },
+ "ui.micDenied": {
+  "en": "The microphone is blocked. Allow it in your browser settings, or type your answer.",
+  "mr": "माइक बंद आहे. ब्राउझरच्या सेटिंगमध्ये परवानगी द्या, किंवा उत्तर लिहा.",
+  "hi": "माइक बंद है। ब्राउज़र की सेटिंग में इसकी अनुमति दें, या जवाब लिखें।"
+ },
+ "ui.micNoNet": {
+  "en": "Speaking needs internet. Please type, or try again.",
+  "mr": "बोलून उत्तर देण्यासाठी इंटरनेट लागते. कृपया लिहा, किंवा पुन्हा प्रयत्न करा.",
+  "hi": "बोलकर जवाब देने के लिए इंटरनेट चाहिए। कृपया लिखें, या फिर से कोशिश करें।"
+ },
+ "ui.micNoMic": {
+  "en": "No microphone found. Please type your answer.",
+  "mr": "माइक सापडला नाही. कृपया उत्तर लिहा.",
+  "hi": "माइक नहीं मिला। कृपया जवाब लिखें।"
+ },
+ "ui.micNothing": {
+  "en": "We did not hear anything. Tap the mic and speak, or type.",
+  "mr": "आम्हाला काहीच ऐकू आले नाही. माइक दाबून बोला, किंवा लिहा.",
+  "hi": "हमें कुछ सुनाई नहीं दिया। माइक दबाकर बोलें, या लिखें।"
+ },
+ "ui.noVoice": {
+  "en": "This device has no voice for this language, so it cannot read aloud.",
+  "mr": "या डिव्हाइसमध्ये या भाषेचा आवाज नाही, त्यामुळे वाचून दाखवता येत नाही.",
+  "hi": "इस डिवाइस में इस भाषा की आवाज़ नहीं है, इसलिए पढ़कर नहीं सुना सकते।"
+ },
+ "ui.supportTitle": {
+  "en": "If you are going through a hard time",
+  "mr": "तुम्ही कठीण काळातून जात असाल तर",
+  "hi": "अगर आप किसी मुश्किल दौर से गुज़र रहे हैं"
+ },
+ "ui.supportText": {
+  "en": "You are not alone. Tele-MANAS is a free, confidential 24×7 helpline from the Government of India. Call 14416 or 1-800-891-4416.",
+  "mr": "तुम्ही एकटे नाही. टेली-मानस ही भारत सरकारची मोफत आणि गोपनीय २४×७ हेल्पलाइन आहे. 14416 किंवा 1-800-891-4416 वर कॉल करा.",
+  "hi": "आप अकेले नहीं हैं। टेली-मानस भारत सरकार की मुफ़्त और गोपनीय 24×7 हेल्पलाइन है। 14416 या 1-800-891-4416 पर कॉल करें।"
+ },
+ "ui.thanksTitle": {
+  "en": "Thank you for sharing your voice!",
+  "mr": "तुमचे म्हणणे मांडल्याबद्दल धन्यवाद!",
+  "hi": "अपनी बात रखने के लिए धन्यवाद!"
+ },
+ "ui.thanksText": {
+  "en": "Your answers have been saved.",
+  "mr": "तुमची उत्तरे जतन झाली आहेत.",
+  "hi": "आपके जवाब सेव हो गए हैं।"
+ },
+ "ui.thanksSent": {
+  "en": "They have been sent.",
+  "mr": "उत्तरे पाठवली गेली आहेत.",
+  "hi": "जवाब भेज दिए गए हैं।"
+ },
+ "ui.thanksQueued": {
+  "en": "They will be sent automatically when this device is online.",
+  "mr": "इंटरनेट मिळताच उत्तरे आपोआप पाठवली जातील.",
+  "hi": "इंटरनेट मिलते ही जवाब अपने-आप भेज दिए जाएँगे।"
+ },
+ "ui.refCode": {
+  "en": "Reference code",
+  "mr": "संदर्भ कोड",
+  "hi": "संदर्भ कोड"
+ },
+ "ui.another": {
+  "en": "Fill another response",
+  "mr": "आणखी एक प्रतिसाद भरा",
+  "hi": "एक और जवाब भरें"
+ },
+ "ui.home": {
+  "en": "Home",
+  "mr": "मुख्य पान",
+  "hi": "मुख्य पेज"
+ },
+ "ui.resume": {
+  "en": "You have an unfinished form on this device.",
+  "mr": "या डिव्हाइसवर तुमचा एक अपूर्ण फॉर्म आहे.",
+  "hi": "इस डिवाइस पर आपका एक अधूरा फ़ॉर्म है।"
+ },
+ "ui.resumeYes": {
+  "en": "Continue it",
+  "mr": "तो पूर्ण करा",
+  "hi": "उसे पूरा करें"
+ },
+ "ui.resumeNo": {
+  "en": "Start fresh",
+  "mr": "नव्याने सुरू करा",
+  "hi": "नया शुरू करें"
+ },
+ "ui.notTranslated": {
+  "en": "Some questions are not yet available in this language, so they are shown in English.",
+  "mr": "काही प्रश्न अजून या भाषेत उपलब्ध नाहीत, त्यामुळे ते इंग्रजीत दाखवले आहेत.",
+  "hi": "कुछ सवाल अभी इस भाषा में उपलब्ध नहीं हैं, इसलिए वे अंग्रेज़ी में दिखाए गए हैं।"
+ },
+ "ui.autoSave": {
+  "en": "Your answers are saved as you go. If you stop, open this link again on the same phone or computer to continue.",
+  "mr": "तुमची उत्तरे भरता भरता जतन होतात. मध्येच थांबलात तर त्याच फोन किंवा कॉम्प्युटरवर ही लिंक पुन्हा उघडून पुढे भरा.",
+  "hi": "आपके जवाब साथ-साथ सेव होते रहते हैं। बीच में रुकें तो उसी फ़ोन या कंप्यूटर पर यह लिंक फिर से खोलकर आगे भरें।"
+ },
+ "ui.resumeWhen": {
+  "en": "Last saved: {when}",
+  "mr": "शेवटचे जतन: {when}",
+  "hi": "आख़िरी बार सेव: {when}"
+ },
+ "ui.stateFirst": {
+  "en": "Please choose the state first (previous question).",
+  "mr": "कृपया आधी राज्य निवडा (मागील प्रश्न).",
+  "hi": "कृपया पहले राज्य चुनें (पिछला सवाल)।"
+ },
+ "ui.notListed": {
+  "en": "Not in the list",
+  "mr": "यादीत नाही",
+  "hi": "सूची में नहीं है"
+ },
+ "ui.visit": {
+  "en": "Visit {site}",
+  "mr": "{site} ला भेट द्या",
+  "hi": "{site} पर जाएँ"
+ },
+ "state.andhra_pradesh": {
+  "en": "Andhra Pradesh",
+  "mr": "आंध्र प्रदेश",
+  "hi": "आंध्र प्रदेश"
+ },
+ "state.arunachal_pradesh": {
+  "en": "Arunachal Pradesh",
+  "mr": "अरुणाचल प्रदेश",
+  "hi": "अरुणाचल प्रदेश"
+ },
+ "state.assam": {
+  "en": "Assam",
+  "mr": "आसाम",
+  "hi": "असम"
+ },
+ "state.bihar": {
+  "en": "Bihar",
+  "mr": "बिहार",
+  "hi": "बिहार"
+ },
+ "state.chhattisgarh": {
+  "en": "Chhattisgarh",
+  "mr": "छत्तीसगड",
+  "hi": "छत्तीसगढ़"
+ },
+ "state.goa": {
+  "en": "Goa",
+  "mr": "गोवा",
+  "hi": "गोवा"
+ },
+ "state.gujarat": {
+  "en": "Gujarat",
+  "mr": "गुजरात",
+  "hi": "गुजरात"
+ },
+ "state.haryana": {
+  "en": "Haryana",
+  "mr": "हरियाणा",
+  "hi": "हरियाणा"
+ },
+ "state.himachal_pradesh": {
+  "en": "Himachal Pradesh",
+  "mr": "हिमाचल प्रदेश",
+  "hi": "हिमाचल प्रदेश"
+ },
+ "state.jharkhand": {
+  "en": "Jharkhand",
+  "mr": "झारखंड",
+  "hi": "झारखंड"
+ },
+ "state.karnataka": {
+  "en": "Karnataka",
+  "mr": "कर्नाटक",
+  "hi": "कर्नाटक"
+ },
+ "state.kerala": {
+  "en": "Kerala",
+  "mr": "केरळ",
+  "hi": "केरल"
+ },
+ "state.madhya_pradesh": {
+  "en": "Madhya Pradesh",
+  "mr": "मध्य प्रदेश",
+  "hi": "मध्य प्रदेश"
+ },
+ "state.maharashtra": {
+  "en": "Maharashtra",
+  "mr": "महाराष्ट्र",
+  "hi": "महाराष्ट्र"
+ },
+ "state.manipur": {
+  "en": "Manipur",
+  "mr": "मणिपूर",
+  "hi": "मणिपुर"
+ },
+ "state.meghalaya": {
+  "en": "Meghalaya",
+  "mr": "मेघालय",
+  "hi": "मेघालय"
+ },
+ "state.mizoram": {
+  "en": "Mizoram",
+  "mr": "मिझोराम",
+  "hi": "मिज़ोरम"
+ },
+ "state.nagaland": {
+  "en": "Nagaland",
+  "mr": "नागालँड",
+  "hi": "नागालैंड"
+ },
+ "state.odisha": {
+  "en": "Odisha",
+  "mr": "ओडिशा",
+  "hi": "ओडिशा"
+ },
+ "state.punjab": {
+  "en": "Punjab",
+  "mr": "पंजाब",
+  "hi": "पंजाब"
+ },
+ "state.rajasthan": {
+  "en": "Rajasthan",
+  "mr": "राजस्थान",
+  "hi": "राजस्थान"
+ },
+ "state.sikkim": {
+  "en": "Sikkim",
+  "mr": "सिक्कीम",
+  "hi": "सिक्किम"
+ },
+ "state.tamil_nadu": {
+  "en": "Tamil Nadu",
+  "mr": "तमिळनाडू",
+  "hi": "तमिलनाडु"
+ },
+ "state.telangana": {
+  "en": "Telangana",
+  "mr": "तेलंगणा",
+  "hi": "तेलंगाना"
+ },
+ "state.tripura": {
+  "en": "Tripura",
+  "mr": "त्रिपुरा",
+  "hi": "त्रिपुरा"
+ },
+ "state.uttar_pradesh": {
+  "en": "Uttar Pradesh",
+  "mr": "उत्तर प्रदेश",
+  "hi": "उत्तर प्रदेश"
+ },
+ "state.uttarakhand": {
+  "en": "Uttarakhand",
+  "mr": "उत्तराखंड",
+  "hi": "उत्तराखंड"
+ },
+ "state.west_bengal": {
+  "en": "West Bengal",
+  "mr": "पश्चिम बंगाल",
+  "hi": "पश्चिम बंगाल"
+ },
+ "state.andaman_nicobar": {
+  "en": "Andaman and Nicobar Islands",
+  "mr": "अंदमान आणि निकोबार बेटे",
+  "hi": "अंडमान और निकोबार द्वीप समूह"
+ },
+ "state.chandigarh": {
+  "en": "Chandigarh",
+  "mr": "चंदीगड",
+  "hi": "चंडीगढ़"
+ },
+ "state.dnh_dd": {
+  "en": "Dadra and Nagar Haveli and Daman and Diu",
+  "mr": "दादरा आणि नगर हवेली आणि दमण आणि दीव",
+  "hi": "दादरा और नगर हवेली और दमन और दीव"
+ },
+ "state.delhi": {
+  "en": "Delhi",
+  "mr": "दिल्ली",
+  "hi": "दिल्ली"
+ },
+ "state.jammu_kashmir": {
+  "en": "Jammu and Kashmir",
+  "mr": "जम्मू आणि काश्मीर",
+  "hi": "जम्मू और कश्मीर"
+ },
+ "state.ladakh": {
+  "en": "Ladakh",
+  "mr": "लडाख",
+  "hi": "लद्दाख"
+ },
+ "state.lakshadweep": {
+  "en": "Lakshadweep",
+  "mr": "लक्षद्वीप",
+  "hi": "लक्षद्वीप"
+ },
+ "state.puducherry": {
+  "en": "Puducherry",
+  "mr": "पुदुच्चेरी",
+  "hi": "पुडुचेरी"
+ }
+}

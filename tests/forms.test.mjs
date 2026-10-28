@@ -73,4 +73,14 @@ eq(LANGS.map(l => l.code), ["en", "hi", "kn", "te", "or", "ta", "pa", "mr"], "ei
 yes(LANGS.every(l => l.tag.startsWith("#")), "#TumBolo for every language");
 yes(Object.keys(FORMS).length === 3, "three forms");
 
+// Every language has every question, option, opening, closing and screen text (team Excel or lang/*.json)
+for (const l of LANGS.filter(l => l.code !== "en")) {
+  for (const k of Object.keys(TOOLS)) {
+    const miss = items(k).flatMap(x => [x.label, x.lead, ...(x.options && !x.source ? x.options : []), x.probe?.ask].filter(e => e && !e[l.code]));
+    eq(miss.length, 0, `${l.code} ${k}: all questions and options translated`);
+    yes(TOOLS[k].opening[l.code] && TOOLS[k].closing[l.code], `${l.code} ${k}: opening and closing`);
+  }
+  yes(STATES.every(s => TOOLS.youth.sections[0].items.find(x => x.source === "state").options.find(o => o.v === s.v)[l.code]), `${l.code}: state names`);
+}
+
 console.log(`${n} / ${n} passed`);

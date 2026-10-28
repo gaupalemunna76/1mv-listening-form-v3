@@ -11,13 +11,24 @@
 //   probe      one follow-up for weak short answers (rules in probe.js)
 //   source     "state" | "district" — dropdown filled from states.js / districts.js
 
-import { FORMS } from "./forms.js?v=20261028-1617";
-import { STATES } from "./states.js?v=20261028-1617";
-import { DISTRICTS } from "./districts.js?v=20261028-1617";
-import { UI } from "./i18n.js?v=20261028-1617";
-import { REPHRASE } from "./rephrase.js?v=20261028-1617";
+import { FORMS } from "./forms.js?v=20261028-1642";
+import { STATES } from "./states.js?v=20261028-1642";
+import { DISTRICTS } from "./districts.js?v=20261028-1642";
+import { UI } from "./i18n.js?v=20261028-1642";
+import { REPHRASE } from "./rephrase.js?v=20261028-1642";
+import { fill } from "./translations.js?v=20261028-1642";
 
-const stateOptions = STATES.map(s => ({ v: s.v, en: s.en, hi: s.hi, mr: s.mr }));
+// Text missing from the Excel / hand-written files is filled from translations.js (lang/*.json, drafts for review).
+for (const [k, f] of Object.entries(FORMS)) {
+  fill(f.opening, `form.${k}.opening`); fill(f.closing, `form.${k}.closing`);
+  for (const s of f.sections) fill(s.title, `form.${k}.section.${s.id}`);
+  for (const q of f.items) {
+    fill(q.label, `form.${k}.${q.id}.label`); fill(q.lead, `form.${k}.${q.id}.lead`);
+    for (const o of q.options || []) fill(o, `form.${k}.${q.id}.opt.${o.v}`);
+  }
+}
+for (const [k, m] of Object.entries(REPHRASE)) for (const [no, e] of Object.entries(m)) fill(e, `rephrase.${k}.${no}`);
+const stateOptions = STATES.map(s => fill({ v: s.v, en: s.en, hi: s.hi, mr: s.mr }, `state.${s.v}`));
 const TITLES = { youth: [UI.titleYouth, UI.pickYouth], parent: [UI.titleParent, UI.pickParent], public: [UI.titlePublic, UI.pickPublic] };
 
 function build(f) {

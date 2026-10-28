@@ -14,6 +14,8 @@ export const LANGS = [
   { code: "mr", name: "मराठी", speech: "mr-IN", tag: "#तुम्हीसांगा", font: "Noto Sans Devanagari" },
 ];
 
+import { fill } from "./translations.js?v=20261028-1642";
+
 const T3 = (en, hi, mr) => ({ en, hi, mr });
 
 export const UI = {
@@ -91,6 +93,9 @@ export const UI = {
   notListed: T3("Not in the list", "सूची में नहीं है", "यादीत नाही"),
   visit: T3("Visit {site}", "{site} पर जाएँ", "{site} ला भेट द्या"),
 };
+
+// Languages without hand-written screen text get it from translations.js (lang/*.json).
+for (const [k, e] of Object.entries(UI)) fill(e, "ui." + k);
 
 export function t(entry, lang, vars) {
   if (!entry) return "";
