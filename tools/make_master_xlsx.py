@@ -14,7 +14,8 @@ d = json.load(open(src, encoding="utf-8"))
 ENGLISH_NAME = {"en": "English", "hi": "Hindi", "kn": "Kannada", "te": "Telugu", "or": "Odia", "ta": "Tamil", "pa": "Punjabi", "mr": "Marathi"}
 FORM_NAME = {"youth": "Youth", "parent": "Parent", "public": "General Public"}
 SOURCE = {"state": "Dropdown: 36 states / UTs", "district": "Dropdown: districts of the chosen state"}
-HEAD = ["Q No.", "Section", "Main Question", "Response Type", "Asked after Q", "Ask if response is"] + [f"Option {i}" for i in range(1, 11)]
+HEAD = ["Q No.", "Section", "Main Question", "Response Type", "Asked after Q", "Ask if response is",
+        "Follow-up (probing) question", "Follow-up asked when"] + [f"Option {i}" for i in range(1, 11)]
 FONT = "Nirmala UI"   # Windows font with every Indian script
 purple = PatternFill("solid", fgColor="382280")
 soft = PatternFill("solid", fgColor="EFEAF8")
@@ -35,6 +36,7 @@ rm.title = "Read me"
 rm.append(["1MV Listening Form V3 (#TumBolo) - questions and options in every language"])
 rm.append(["Same text as the live form: https://gaupalemunna76.github.io/1mv-listening-form-v3/"])
 rm.append(["Option codes O1, O2 ... are used in 'Ask if response is'. Answers are saved in English in the Sheet."])
+rm.append(["Follow-up (probing) question: asked once, only when the answer is too short; the reply goes to the 'Fups:' column in the Sheet."])
 rm.append([])
 rm.append(["Tab", "Language", "Form", "Translation"])
 hdr_row = rm.max_row
@@ -60,7 +62,9 @@ for l in d["langs"]:
             if r["lead"]:
                 q = t(r["lead"]) + "\n\n" + q
             opts = [SOURCE[r["source"]]] if r["source"] else [t(o) for o in r["options"]]
-            ws.append([r["no"], t(r["section"]), q, r["type"], r["parent"], r["when"]] + opts)
+            p = r["probe"]
+            fup = (t(p["lead"]) + ("\n" + t(p["ask"]) if p["ask"] else "")) if p else ""
+            ws.append([r["no"], t(r["section"]), q, r["type"], r["parent"], r["when"], fup, p["rule"] if p else ""] + opts)
         ws.append(["", "Closing", t(f["closing"])])
         ws["A1"].font = Font(name=FONT, bold=True, size=12, color="382280")
         for c in ws[2]:
@@ -71,7 +75,7 @@ for l in d["langs"]:
         for r in (3, ws.max_row):
             for c in ws[r]:
                 c.fill = soft
-        for i, w in enumerate([8, 22, 60, 14, 10, 14] + [22] * 10, start=1):
+        for i, w in enumerate([8, 22, 60, 14, 10, 14, 50, 24] + [22] * 10, start=1):
             ws.column_dimensions[get_column_letter(i)].width = w
         ws.freeze_panes = "C3"
 wb.save(out)
