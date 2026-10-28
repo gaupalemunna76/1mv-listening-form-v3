@@ -1,4 +1,4 @@
-// Follow-up for short answers: when a text answer is empty or only 2–3 words, the question is asked again in
+// Follow-up for short answers: when a text answer is empty or only 4 words or fewer, the question is asked again in
 // other words (same meaning, inviting a longer answer). Keyed by form and Q number from the Excel.
 // English and Marathi (drafts for review); other languages show English until added here.
 // Questions not listed (the "3 skills" questions) accept short answers: a follow-up only if empty or "ok", "don't know".
