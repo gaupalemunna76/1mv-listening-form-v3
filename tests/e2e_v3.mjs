@@ -114,6 +114,7 @@ try {
   ok(await ev(`!!document.querySelector('.lead')`), "thank-you lead shown above 1A");
   await step(`T.txt('Doctor')`); await step(`T.next()`);
   ok(await ev(`T.fu()`), "one-word answer gets a follow-up");
+  ok((await ev(`document.querySelector('.followup .fu').textContent`)).includes("कोणत्या प्रकारचे काम"), "follow-up asks 1A again in other words (Marathi)");
   await step(`T.probe('Child doctor in a government hospital in Pune')`); await step(`T.next()`);
   ok(await ev(`T.q()`) === "Q1B", "follow-up answered, moves on");
   await step(`T.txt('A simple life with my family in my own town')`); await step(`T.next()`);

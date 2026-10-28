@@ -11,10 +11,11 @@
 //   probe      one follow-up for weak short answers (rules in probe.js)
 //   source     "state" | "district" — dropdown filled from states.js / districts.js
 
-import { FORMS } from "./forms.js?v=20261028-1558";
-import { STATES } from "./states.js?v=20261028-1558";
-import { DISTRICTS } from "./districts.js?v=20261028-1558";
-import { UI } from "./i18n.js?v=20261028-1558";
+import { FORMS } from "./forms.js?v=20261028-1608";
+import { STATES } from "./states.js?v=20261028-1608";
+import { DISTRICTS } from "./districts.js?v=20261028-1608";
+import { UI } from "./i18n.js?v=20261028-1608";
+import { REPHRASE } from "./rephrase.js?v=20261028-1608";
 
 const stateOptions = STATES.map(s => ({ v: s.v, en: s.en, hi: s.hi, mr: s.mr }));
 const TITLES = { youth: [UI.titleYouth, UI.pickYouth], parent: [UI.titleParent, UI.pickParent], public: [UI.titlePublic, UI.pickPublic] };
@@ -25,7 +26,10 @@ function build(f) {
   const stateQ = f.items.find(q => q.source === "state");
   const items = f.items.map(src => {
     const q = { ...src, column: `Q${src.no} ${src.label.en}` };
-    if (src.probe) q.probe = { minWords: 3 };
+    // Long-answer questions: 3 words or fewer -> asked again in other words (rephrase.js).
+    // Other text questions (the "3 skills" lists) accept short answers: follow-up only if empty or a non-answer.
+    const re = REPHRASE[f.key]?.[src.no];
+    if (src.probe) q.probe = re ? { minWords: 4, strict: true, ask: re } : { minWords: 1 };
     if (src.source === "state") q.options = stateOptions;
     if (src.source === "district") {
       q.other = true;

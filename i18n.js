@@ -54,6 +54,7 @@ export const UI = {
   probeShort: T3("Thank you. Could you tell us a little more?", "धन्यवाद। क्या आप थोड़ा और बता सकते हैं?", "धन्यवाद. थोडे अधिक सांगाल का?"),
   probeVague: T3("Thank you, that's a start. Could you be more specific?", "धन्यवाद, यह अच्छी शुरुआत है। क्या आप थोड़ा और साफ़ बता सकते हैं?", "धन्यवाद, ही चांगली सुरुवात आहे. थोडे अधिक नेमके सांगाल का?"),
   probeUnclear: T3("We could not understand this answer.", "हम यह जवाब समझ नहीं पाए।", "आम्हाला हे उत्तर समजले नाही."),
+  probeRephrase: T3("Thank you! Could you say a little more? Let us ask it another way:", "धन्यवाद! क्या आप थोड़ा और बता सकते हैं? हम इसे दूसरे तरीके से पूछते हैं:", "धन्यवाद! थोडे अधिक सांगाल का? हाच प्रश्न वेगळ्या शब्दांत:"),
   probeSkipNote: T3("If you prefer not to add more, press Next again.", "अगर आप और नहीं लिखना चाहते, तो फिर से \"आगे\" दबाएँ।", "अधिक लिहायचे नसेल, तर पुन्हा \"पुढे\" दाबा."),
   moreHere: T3("Write a bit more here", "यहाँ थोड़ा और लिखें", "इथे थोडे अधिक लिहा"),
   micStart: T3("Speak your answer", "बोलकर जवाब दें", "बोलून उत्तर द्या"),

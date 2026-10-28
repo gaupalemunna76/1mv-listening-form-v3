@@ -47,10 +47,21 @@ for (const k of Object.keys(TOOLS)) {
   yes(d.optionsFor({ [d.dependsOn]: "maharashtra" }).some(o => o.v === "Pune"), `${k}: Pune in Maharashtra`);
 }
 yes(STATES.every(s => DISTRICTS[s.v]?.length), "every state/UT has districts");
-eq(Object.values(DISTRICTS).flat().length, 789, "789 districts");
+eq(Object.values(DISTRICTS).flat().length, 723, "723 districts (SG Dashboard helper list)");
 
 // Follow-ups on text questions
 yes(items("youth").filter(x => x.type === "short").every(x => x.probe), "every text question can get a follow-up");
+const long = q("youth", "1A").probe, skills = q("youth", "3").probe;
+yes(long.ask.en && long.ask.mr, "1A has a rephrased follow-up in English and Marathi");
+eq(assess("Doctor", long), "short", "1 word on a long-answer question -> rephrase");
+eq(assess("Doctor in AIIMS", long), "short", "3 words on a long-answer question -> rephrase");
+eq(assess("I want to be a doctor", long), null, "a full sentence does not");
+eq(assess("Communication, coding, English", skills), null, "a 3-skill list is fine for the skills question");
+eq(assess("", skills), "empty", "empty skills answer still gets a follow-up");
+for (const k of Object.keys(TOOLS)) yes(items(k).filter(x => x.probe?.ask).every(x => x.probe.ask.en.endsWith("?") || x.probe.ask.en.endsWith(".")), `${k}: rephrasings are full sentences`);
+eq(items("youth").filter(x => x.probe?.ask).map(x => x.no), ["1A", "1B", "5", "6", "7", "8"], "youth long-answer questions");
+eq(items("parent").filter(x => x.probe?.ask).map(x => x.no), ["9B", "10", "11", "12", "13"], "parent long-answer questions");
+eq(items("public").filter(x => x.probe?.ask).map(x => x.no), ["1", "3", "4", "5"], "public long-answer questions");
 eq(assess("ok", { minWords: 3 }), "nonanswer", "'ok' gets a follow-up");
 eq(assess("Doctor", { minWords: 3 }), "short", "one word gets a follow-up");
 eq(assess("I want to become a doctor", { minWords: 3 }), null, "a full answer does not");

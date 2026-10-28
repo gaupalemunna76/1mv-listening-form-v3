@@ -1,21 +1,19 @@
 /**
- * 1MV Listening Form V3 -> the SAME Google Sheet as Form 1 ("1MV Listening Form – Responses"), on NEW tabs.
+ * 1MV Listening Form V3 -> its own NEW Google Sheet (Form 1's Sheet is not used).
  *
- * This is a separate (standalone) Apps Script, so Form 1's own script inside the Sheet is not touched.
- * Set up once:  script.google.com -> New project -> paste this file -> Save ->
+ * Set up once: create a new Google Sheet (e.g. "1MV Listening Form V3 – Responses") ->
+ *   Extensions -> Apps Script -> delete what is there, paste this file -> Save ->
  *   Deploy -> New deployment -> Web app (Execute as: Me, Who has access: Anyone) -> copy the /exec URL into config.js.
  *
- * - Writes only to the tabs "V3 Youth", "V3 Parents", "V3 General Public" (created on the first response).
- *   Form 1's tabs (Youth, Parents, General Public) are never read or changed.
+ * - One tab per form: "Youth", "Parents", "General Public" (created on the first response).
  * - One row per response (session_id). An unfinished response arrives as Status "In progress" and is updated
  *   in the same row as the person continues; it becomes "Completed" on Submit.
  *   A "Completed" row is never turned back to "In progress", and an older update never overwrites a newer one.
  * - A tab's columns never change after it is created: a response with different columns is rejected.
- *   To change questions, rename the old tab (e.g. "V3 Youth (old)") and a fresh tab is made on the next response.
+ *   To change questions, rename the old tab (e.g. "Youth (old)") and a fresh tab is made on the next response.
  */
-const SHEET_ID = "1m8GIITYNMB4FqWm11gl_el1qnTbNWvDs0392QxTnUFU";   // 1MV Listening Form – Responses (Form 1's Sheet)
 const TOOL = "1MV Listening Form V3";
-const TABS = { youth: "V3 Youth", parent: "V3 Parents", public: "V3 General Public" };
+const TABS = { youth: "Youth", parent: "Parents", public: "General Public" };
 const MAX_COLS = 300;
 
 function doPost(e) {
@@ -66,7 +64,7 @@ function doPost(e) {
 }
 
 function tab_(name, columns) {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(name);
   if (!sh) sh = ss.insertSheet(name);
   if (sh.getLastRow() === 0) {

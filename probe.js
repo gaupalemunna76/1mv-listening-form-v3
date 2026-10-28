@@ -63,7 +63,8 @@ export function assess(text, probe = {}) {
   // Only general words such as "good", "peaceful", "hard work".
   if (vague.size && meaningful.length && !content.length) return "vague";
   // Too short — unless it still has two real content words (e.g. "Nurse in AIIMS").
-  if (w.length < (probe.minWords ?? 3) && content.length < 2) return "short";
+  // strict: any answer under minWords is short (questions that need a longer answer).
+  if (w.length < (probe.minWords ?? 3) && (probe.strict || content.length < 2)) return "short";
   return null;
 }
 

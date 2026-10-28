@@ -1,17 +1,17 @@
 // 1MV Listening Form V3 — one question per screen, Shikshagraha look, eight languages (English where a
 // translation is missing), conditional questions, follow-ups, optional 🔊 listen and 🎤 speak,
 // in-progress answers saved to the Sheet, and confirmed sending with retries.
-import { TOOLS } from "./questions.js?v=20261028-1558";
-import { LANGS, UI, t } from "./i18n.js?v=20261028-1558";
-import { assess, isDistress } from "./probe.js?v=20261028-1558";
-import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1558";
-import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1558";
+import { TOOLS } from "./questions.js?v=20261028-1608";
+import { LANGS, UI, t } from "./i18n.js?v=20261028-1608";
+import { assess, isDistress } from "./probe.js?v=20261028-1608";
+import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1608";
+import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1608";
 
 const params = new URLSearchParams(location.search);
 // Local test copies (localhost) never send to the real Sheet unless ?sync is added; ?sheet=<url> sends to a test receiver.
 const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const SHEET_URL = LOCAL && params.get("sheet") ? params.get("sheet") : LOCAL && !params.has("sync") ? "" : CONFIG_SHEET_URL;
-const VERSION = "20261028-1558";
+const VERSION = "20261028-1608";
 // Own storage keys: V1 lives on the same domain (gaupalemunna76.github.io) and must not see V3 data.
 const DRAFT = "lf3.draft";
 const STORE = "lf3.responses";
@@ -218,9 +218,11 @@ function textBox(id, value, rows, ph) {
 }
 
 function followupHTML(q, p) {
-  const lead = { empty: UI.probeEmpty, nonanswer: UI.probeShort, short: UI.probeShort, vague: UI.probeVague, unclear: UI.probeUnclear }[p.reason] || UI.probeShort;
+  const ask = q.probe.ask;
+  const lead = p.reason === "empty" ? UI.probeEmpty : p.reason === "unclear" ? UI.probeUnclear : ask ? UI.probeRephrase
+    : { nonanswer: UI.probeShort, short: UI.probeShort, vague: UI.probeVague }[p.reason] || UI.probeShort;
   return `<div class="followup">
-    <p class="fu">${tx(lead)}</p>
+    <p class="fu"><span class="small">${tx(lead)}</span>${ask ? `<br><span lang="${hasLang(ask) ? S.lang : "en"}">${tx(ask)}</span>` : ""}</p>
     ${textBox(`pa_${q.id}`, p.answer, 1, UI.moreHere)}
     <p class="small muted">${tx(UI.probeSkipNote)}</p></div>`;
 }
@@ -323,7 +325,7 @@ function onBack() {
 
 // ---------------- optional speech: 🔊 read a question, 🎤 speak an answer ----------------
 function sayText(q, followup) {
-  if (followup) return t(UI.probeShort, S.lang);
+  if (followup) return t(q.probe.ask || UI.probeShort, S.lang);
   let s = (q.lead ? t(q.lead, S.lang) + ". " : "") + t(q.label, S.lang);
   const opts = optionsOf(q);
   if (opts.length && opts.length <= 12) s += ". " + opts.map(o => t(o, S.lang)).join(", ");
@@ -338,7 +340,7 @@ async function onSay(btn, q, followup) {
   saying = btn; btn.classList.add("on");
   await loadVoices();
   // A question still in English is read with an English voice.
-  const lang = followup || hasLang(q.label) ? langOf(S.lang).speech : "en-IN";
+  const lang = hasLang(followup ? q.probe.ask || UI.probeShort : q.label) ? langOf(S.lang).speech : "en-IN";
   const voice = pickVoice(lang);
   const r = await speak(sayText(q, followup), { voice, lang, rate: lang === "en-IN" ? 1 : 0.95 });
   btn.classList.remove("on");
