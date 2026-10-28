@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+node_modules/
+*.csv
+# Team Excel files (have PoC names) stay on this computer only
+translations/

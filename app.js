@@ -1,0 +1,552 @@
+// 1MV Listening Form V3 — one question per screen, Shikshagraha look, eight languages (English where a
+// translation is missing), conditional questions, follow-ups, optional 🔊 listen and 🎤 speak,
+// in-progress answers saved to the Sheet, and confirmed sending with retries.
+import { TOOLS } from "./questions.js?v=20261028-1558";
+import { LANGS, UI, t } from "./i18n.js?v=20261028-1558";
+import { assess, isDistress } from "./probe.js?v=20261028-1558";
+import { SHEET_URL as CONFIG_SHEET_URL } from "./config.js?v=20261028-1558";
+import { canSpeak, canListen, loadVoices, pickVoice, speak, stopSpeaking, unlockSpeech, listen, isMobile } from "./speech.js?v=20261028-1558";
+
+const params = new URLSearchParams(location.search);
+// Local test copies (localhost) never send to the real Sheet unless ?sync is added; ?sheet=<url> sends to a test receiver.
+const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const SHEET_URL = LOCAL && params.get("sheet") ? params.get("sheet") : LOCAL && !params.has("sync") ? "" : CONFIG_SHEET_URL;
+const VERSION = "20261028-1558";
+// Own storage keys: V1 lives on the same domain (gaupalemunna76.github.io) and must not see V3 data.
+const DRAFT = "lf3.draft";
+const STORE = "lf3.responses";
+const UID_KEY = "lf3.uid";
+const TOOL_NAME = "1MV Listening Form V3";
+const $ = sel => document.querySelector(sel);
+const app = $("#app");
+
+const S = { screen: "start", lang: "en", tool: null, pos: 0, A: {}, P: {}, V: {}, flag: false, sid: "", started: "", updated: "", source: params.get("src") || "", consent: false };
+
+// ---------------- storage (wrapped: private windows can refuse storage) ----------------
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const clearDraft = () => { try { localStorage.removeItem(DRAFT); } catch {} };
+function saveDraft() {
+  if (!S.tool || S.screen !== "q") return;
+  const old = load(DRAFT, null);
+  S.updated = new Date().toISOString();
+  save(DRAFT, { tool: S.tool.key, lang: S.lang, pos: S.pos, A: S.A, P: S.P, V: S.V, flag: S.flag, sid: S.sid, started: S.started,
+    updated: S.updated, source: S.source, sentUpdated: old?.sid === S.sid ? old.sentUpdated : "" });
+}
+
+// One ID per browser: every response from this phone or computer carries it, so a person's responses can be linked.
+const randId = n => Array.from(crypto.getRandomValues(new Uint8Array(n)), b => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[b % 32]).join("");
+const UID = (() => { let u = load(UID_KEY, ""); if (!/^U-[A-Z0-9]{8}$/.test(u)) { u = "U-" + randId(8); save(UID_KEY, u); } return u; })();
+
+// ---------------- helpers ----------------
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const tx = (entry, vars) => esc(t(entry, S.lang, vars));
+const paras = s => esc(s).split(/\n+/).map(p => `<p>${p}</p>`).join("");
+const allItems = tool => tool.sections.flatMap(s => s.items);
+const flat = (tool = S.tool) => tool.sections.flatMap((s, si) => s.items.map(q => ({ q, si })));
+const visible = (q, A = S.A) => !q.showIf || !!q.showIf(A);
+const optionsOf = (q, A = S.A) => q.optionsFor ? q.optionsFor(A) : q.options || [];
+const newSid = () => {
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  return `LF3-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${randId(6)}`;
+};
+const langOf = code => LANGS.find(l => l.code === code) || LANGS[0];
+const go = (screen) => { S.screen = screen; render(); scrollTo(0, 0); };
+const hasLang = entry => S.lang === "en" || !!entry?.[S.lang];
+
+// ---------------- language ----------------
+const loadedFonts = new Set();
+function loadFont(l) {
+  if (!l.font || loadedFonts.has(l.font)) return;
+  loadedFonts.add(l.font);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${l.font.replace(/ /g, "+")}:wght@400;600;700&display=swap`;
+  document.head.appendChild(link);
+}
+function setLang(code) {
+  S.lang = LANGS.some(l => l.code === code) ? code : "en";
+  document.documentElement.lang = S.lang;
+  loadFont(langOf(S.lang));
+  renderTop();
+  saveDraft();
+  render();
+}
+function renderTop() {
+  $("#tag").textContent = langOf(S.lang).tag;
+  $("#tag").lang = S.lang;
+  const sel = $("#langSel");
+  sel.innerHTML = LANGS.map(l => `<option value="${l.code}" lang="${l.code}"${l.code === S.lang ? " selected" : ""}>${esc(l.name)}</option>`).join("");
+  sel.setAttribute("aria-label", t(UI.stepLang, S.lang).replace(/^\S+\s/, ""));
+}
+$("#langSel").onchange = e => setLang(e.target.value);
+document.addEventListener("click", e => { const b = e.target.closest("[data-lang]"); if (b) setLang(b.dataset.lang); });
+
+// ---------------- screens ----------------
+function render() {
+  stopVoice();
+  if (params.has("admin")) return renderAdmin();
+  if (S.screen === "q" && S.tool) return renderQuestion();
+  if (S.screen === "thanks") return renderThanks();
+  return renderStart();
+}
+
+const ICON_SAY = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+const ICON_MIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+const supportBox = () => `<div class="support" role="note"><b>${tx(UI.supportTitle)}</b><span>${tx(UI.supportText)}</span></div>`;
+const whenText = iso => { try { return new Date(iso).toLocaleString(S.lang === "en" ? "en-IN" : S.lang + "-IN", { dateStyle: "medium", timeStyle: "short" }); } catch { return iso; } };
+const missingLang = tool => S.lang !== "en" && allItems(tool).some(q => !q.label[S.lang]);
+
+function renderStart() {
+  const d = load(DRAFT, null);
+  const preset = params.get("t");
+  if (!S.tool && preset && TOOLS[preset]) S.tool = TOOLS[preset];
+  app.innerHTML = `<section class="screen">
+    <div class="panel stack hero">
+      <h1>${tx(UI.startTitle)}</h1>
+      <p class="small">${tx(UI.startLead)}</p>
+    </div>
+    ${d && TOOLS[d.tool] ? `<div class="panel stack resume"><p>${tx(UI.resume)} <b>${tx(TOOLS[d.tool].title)}</b></p>
+      ${d.updated ? `<p class="small muted">${tx(UI.resumeWhen, { when: whenText(d.updated) })}</p>` : ""}
+      <div class="row"><button class="big" id="resumeYes">${tx(UI.resumeYes)} →</button><button class="btn" id="resumeNo">${tx(UI.resumeNo)}</button></div></div>` : ""}
+    <div class="panel stack">
+      <h3>${tx(UI.stepLang)}</h3>
+      <div class="langs" role="group">${LANGS.map(l => `<button type="button" data-lang="${l.code}" lang="${l.code}" aria-pressed="${l.code === S.lang}">${esc(l.name)}</button>`).join("")}</div>
+    </div>
+    <div class="panel stack">
+      <h3>${tx(UI.stepForm)}</h3>
+      <div class="forms">${Object.values(TOOLS).map(tool => `<button type="button" class="form" data-form="${tool.key}" aria-pressed="${S.tool?.key === tool.key}">
+        <b>${tx(tool.title)}</b><span class="small">${tx(tool.pick)}</span></button>`).join("")}</div>
+    </div>
+    <div class="panel stack">
+      <h3>${tx(UI.stepStart)}</h3>
+      ${S.tool ? `<div class="opening" lang="${hasLang(S.tool.opening) ? S.lang : "en"}">${paras(t(S.tool.opening, S.lang))}</div>` : ""}
+      ${S.tool && missingLang(S.tool) ? `<p class="notice">${tx(UI.notTranslated)}</p>` : ""}
+      <p class="notice">${tx(UI.privacy)}</p>
+      <p class="small">${tx(UI.autoSave)}</p>
+      ${UI.draftNote[S.lang] ? `<p class="small muted">${tx(UI.draftNote)}</p>` : ""}
+      <label class="check"><input type="checkbox" id="consent" ${S.consent ? "checked" : ""}><span>${tx(UI.consent)}</span></label>
+    </div>
+    <div class="row"><button class="big" id="startBtn" ${S.tool && S.consent ? "" : "disabled"}>${tx(UI.start)} →</button>
+      <span class="small muted" id="startHint">${S.tool ? "" : tx(UI.pickFormFirst)}</span></div>
+  </section>`;
+  app.querySelectorAll("[data-form]").forEach(b => b.onclick = () => { S.tool = TOOLS[b.dataset.form]; renderStart(); });
+  $("#consent").onchange = e => { S.consent = e.target.checked; $("#startBtn").disabled = !(S.tool && S.consent); };
+  $("#startBtn").onclick = () => {
+    Object.assign(S, { A: {}, P: {}, V: {}, flag: false, sid: newSid(), started: new Date().toISOString() });
+    S.pos = firstVisible(0);
+    clearDraft(); go("q"); saveDraft();
+  };
+  if ($("#resumeYes")) {
+    $("#resumeYes").onclick = () => {
+      Object.assign(S, { tool: TOOLS[d.tool], pos: d.pos || 0, A: d.A || {}, P: d.P || {}, V: d.V || {}, flag: !!d.flag, sid: d.sid || newSid(), started: d.started || new Date().toISOString(), source: d.source || S.source, screen: "q" });
+      setLang(d.lang || S.lang);
+    };
+    $("#resumeNo").onclick = () => { clearDraft(); renderStart(); };
+  }
+}
+
+function firstVisible(from) { const f = flat(); for (let i = from; i < f.length; i++) if (visible(f[i].q)) return i; return f.length; }
+function prevVisible(from) { const f = flat(); for (let i = from; i >= 0; i--) if (visible(f[i].q)) return i; return -1; }
+
+function renderQuestion() {
+  const f = flat();
+  if (S.pos >= f.length) return submit();
+  const { q, si } = f[S.pos];
+  const sec = S.tool.sections[si];
+  const vis = f.filter(x => visible(x.q));
+  const num = vis.findIndex(x => x.q === q) + 1;
+  const req = q.required ? `<span class="req" title="${tx(UI.required)}">*</span>` : "";
+  const qLang = hasLang(q.label) ? S.lang : "en";
+  const p = S.P[q.id];
+  app.innerHTML = `<section class="screen">
+    <div class="progress">
+      <div class="progress-top"><span class="sec">${tx(sec.title)}</span><span class="count">${tx(UI.qOf, { i: num, n: vis.length })}</span></div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${vis.length}" aria-valuenow="${num - 1}"><i style="width:${Math.round(((num - 1) / vis.length) * 100)}%"></i></div>
+    </div>
+    <div id="supportSlot">${S.flag ? supportBox() : ""}</div>
+    <article class="card" data-q="${q.id}">
+      ${q.lead ? `<div class="lead" lang="${hasLang(q.lead) ? S.lang : "en"}">${paras(t(q.lead, S.lang))}</div>` : ""}
+      <h2 class="qtext" id="qtext" lang="${qLang}">${tx(q.label)}${req}</h2>
+      ${answerHTML(q)}
+      <div id="fuSlot">${p ? followupHTML(q, p) : ""}</div>
+      <p class="hint" id="err" aria-live="polite"></p>
+      <div class="controls">
+        <button type="button" class="btn back" id="back">← ${tx(UI.back)}</button>
+        <div class="row">
+          ${canSpeak ? `<button type="button" class="btn say" id="say" aria-label="${tx(UI.listen)}">${ICON_SAY}<span>${tx(UI.listen)}</span></button>` : ""}
+          <button type="button" class="big" id="next">${tx(isLast() ? UI.submit : UI.next)} →</button>
+        </div>
+      </div>
+    </article>
+  </section>`;
+  wireAnswer(q);
+  $("#back").onclick = onBack;
+  $("#next").onclick = onNext;
+  if ($("#say")) $("#say").onclick = () => onSay($("#say"), q, !!S.P[q.id]);
+  app.querySelectorAll("textarea.grow").forEach(autoGrow);
+  const focusEl = $("#pa_" + q.id) || $("#f_" + q.id);
+  if (focusEl && !isMobile && q.type === "short") focusEl.focus({ preventScroll: true });
+}
+
+function isLast() { const f = flat(); for (let i = S.pos + 1; i < f.length; i++) if (visible(f[i].q)) return false; return true; }
+
+function answerHTML(q) {
+  const v = S.A[q.id];
+  const opts = optionsOf(q);
+  if (q.type === "choice" || q.type === "multi") {
+    const sel = q.type === "multi" ? (v || []) : [v];
+    return `${q.type === "multi" ? `<p class="small muted">${tx(UI.chooseMany)}</p>` : ""}
+      <div class="opts${opts.length > 4 ? " many" : ""}" role="group" aria-labelledby="qtext">${opts.map(o => `<button type="button" class="opt" data-v="${esc(o.v)}" aria-pressed="${sel.includes(o.v)}" lang="${o[S.lang] ? S.lang : "en"}">${tx(o)}</button>`).join("")}</div>`;
+  }
+  if (q.type === "dropdown") {
+    if (q.dependsOn && !S.A[q.dependsOn]) return `<p class="notice">${tx(UI.stateFirst)}</p>`;
+    return `<select id="f_${q.id}" aria-labelledby="qtext"><option value="">${tx(UI.choose)}…</option>
+      ${opts.map(o => `<option value="${esc(o.v)}"${v === o.v ? " selected" : ""}>${tx(o)}</option>`).join("")}
+      ${q.other ? `<option value="__other"${v === "__other" ? " selected" : ""}>${tx(UI.notListed)}</option>` : ""}</select>
+      ${q.other ? `<input type="text" id="o_${q.id}" maxlength="200" placeholder="${tx(UI.yourAnswer)}" value="${esc(S.A[q.id + "_other"])}" ${v === "__other" ? "" : "hidden"}>` : ""}`;
+  }
+  if (q.type === "number") return `<input type="number" id="f_${q.id}" inputmode="numeric" min="${q.min}" max="${q.max}" value="${esc(v)}" placeholder="${tx(UI.yourAnswer)}" aria-labelledby="qtext">`;
+  return textBox(`f_${q.id}`, v, 1, UI.yourAnswer);
+}
+
+function textBox(id, value, rows, ph) {
+  const field = `<textarea id="${id}" rows="${rows}" class="grow" maxlength="3000" placeholder="${tx(ph)}" aria-labelledby="qtext">${esc(value)}</textarea>`;
+  if (!canListen) return `<div class="type solo">${field}</div>`;
+  return `<div class="type">${field}<button type="button" class="mic" data-mic="${id}" aria-label="${tx(UI.micStart)}" title="${tx(UI.micStart)}">${ICON_MIC}</button></div>
+    <p class="stxt" id="m_${id}" hidden></p>`;
+}
+
+function followupHTML(q, p) {
+  const lead = { empty: UI.probeEmpty, nonanswer: UI.probeShort, short: UI.probeShort, vague: UI.probeVague, unclear: UI.probeUnclear }[p.reason] || UI.probeShort;
+  return `<div class="followup">
+    <p class="fu">${tx(lead)}</p>
+    ${textBox(`pa_${q.id}`, p.answer, 1, UI.moreHere)}
+    <p class="small muted">${tx(UI.probeSkipNote)}</p></div>`;
+}
+
+function wireAnswer(q) {
+  const changed = () => { $("#err").textContent = ""; saveDraft(); };
+  if (q.type === "choice" || q.type === "multi") {
+    const btns = [...app.querySelectorAll(".opt")];
+    btns.forEach(b => b.onclick = () => {
+      if (q.type === "choice") {
+        btns.forEach(x => x.setAttribute("aria-pressed", x === b));
+        S.A[q.id] = b.dataset.v; changed();
+        // One tap answers a single-choice question; move on after a short pause so the choice is visible.
+        clearTimeout(wireAnswer.auto);
+        wireAnswer.auto = setTimeout(() => { if (S.screen === "q" && flat()[S.pos]?.q === q) onNext(); }, 380);
+      } else {
+        const on = b.getAttribute("aria-pressed") !== "true";
+        b.setAttribute("aria-pressed", on);
+        S.A[q.id] = btns.filter(x => x.getAttribute("aria-pressed") === "true").map(x => x.dataset.v); changed();
+      }
+    });
+    return;
+  }
+  const f = $(`#f_${q.id}`);
+  if (!f) return;
+  if (q.type === "dropdown") {
+    const o = $(`#o_${q.id}`);
+    f.onchange = () => {
+      if (S.A[q.id] !== f.value && q.source === "state") {
+        // A new state means the district chosen earlier no longer fits.
+        for (const x of allItems(S.tool)) if (x.dependsOn === q.id) { delete S.A[x.id]; delete S.A[x.id + "_other"]; }
+      }
+      S.A[q.id] = f.value; if (o) { o.hidden = f.value !== "__other"; if (!o.hidden) o.focus(); } changed();
+    };
+    if (o) o.oninput = () => { S.A[q.id + "_other"] = o.value; saveDraft(); };
+    return;
+  }
+  f.oninput = () => { S.A[q.id] = f.value; changed(); };
+  f.onblur = () => checkDistress(f.value);
+  wireFollowup(q);
+}
+
+function wireFollowup(q) {
+  const pa = $(`#pa_${q.id}`);
+  if (!pa) return;
+  pa.oninput = () => { S.P[q.id].answer = pa.value; saveDraft(); };
+  pa.onblur = () => checkDistress(pa.value);
+}
+
+function checkDistress(text) {
+  if (!S.flag && isDistress(text)) {
+    S.flag = true; saveDraft();
+    const slot = $("#supportSlot");
+    if (slot) { slot.innerHTML = supportBox(); slot.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+}
+
+function isEmpty(q) {
+  const v = S.A[q.id];
+  if (q.type === "multi") return !v || !v.length;
+  if (v === "__other") return !String(S.A[q.id + "_other"] || "").trim();
+  return v === undefined || v === null || String(v).trim() === "";
+}
+
+function onNext() {
+  stopVoice();
+  clearTimeout(wireAnswer.auto);
+  const q = flat()[S.pos].q;
+  const err = msg => { $("#err").textContent = msg; $("#err").scrollIntoView({ behavior: "smooth", block: "center" }); };
+  if (q.dependsOn && !S.A[q.dependsOn]) return onBack();
+  if (q.required && isEmpty(q)) return err(t(UI.requiredError, S.lang));
+  if (q.type === "number" && !isEmpty(q)) {
+    const n = Number(S.A[q.id]);
+    if (!Number.isFinite(n) || n < q.min || n > q.max) return err(t(UI.numberError, S.lang, { min: q.min, max: q.max }));
+  }
+  // Follow-up: asked once, the first time Next is pressed with a weak short answer.
+  if (q.probe && !S.P[q.id]) {
+    const reason = assess(S.A[q.id], q.probe);
+    if (reason) {
+      S.P[q.id] = { reason, answer: "" };
+      saveDraft();
+      $("#fuSlot").innerHTML = followupHTML(q, S.P[q.id]);
+      wireFollowup(q);
+      $("#fuSlot").querySelectorAll("textarea.grow").forEach(autoGrow);
+      $("#fuSlot").scrollIntoView({ behavior: "smooth", block: "center" });
+      if (!isMobile) $(`#pa_${q.id}`).focus({ preventScroll: true });
+      return;
+    }
+  }
+  S.pos = firstVisible(S.pos + 1);
+  if (S.pos >= flat().length) return submit();
+  saveDraft(); render(); scrollTo(0, 0);
+}
+
+function onBack() {
+  const p = prevVisible(S.pos - 1);
+  if (p < 0) { saveDraft(); return go("start"); }
+  S.pos = p; saveDraft(); render(); scrollTo(0, 0);
+}
+
+// ---------------- optional speech: 🔊 read a question, 🎤 speak an answer ----------------
+function sayText(q, followup) {
+  if (followup) return t(UI.probeShort, S.lang);
+  let s = (q.lead ? t(q.lead, S.lang) + ". " : "") + t(q.label, S.lang);
+  const opts = optionsOf(q);
+  if (opts.length && opts.length <= 12) s += ". " + opts.map(o => t(o, S.lang)).join(", ");
+  return s;
+}
+
+let saying = null;
+async function onSay(btn, q, followup) {
+  stopMic();
+  if (saying) { stopSpeaking(); saying.classList.remove("on"); const was = saying; saying = null; if (was === btn) return; }
+  unlockSpeech();
+  saying = btn; btn.classList.add("on");
+  await loadVoices();
+  // A question still in English is read with an English voice.
+  const lang = followup || hasLang(q.label) ? langOf(S.lang).speech : "en-IN";
+  const voice = pickVoice(lang);
+  const r = await speak(sayText(q, followup), { voice, lang, rate: lang === "en-IN" ? 1 : 0.95 });
+  btn.classList.remove("on");
+  if (saying === btn) saying = null;
+  if (!r.ok && !voice && $("#err")) $("#err").textContent = t(UI.noVoice, S.lang);
+}
+
+let mic = null; // { btn, field, handle }
+function stopMic() { if (mic) mic.handle.cancel(); }
+function stopVoice() { stopMic(); if (saying) { stopSpeaking(); saying.classList.remove("on"); saying = null; } }
+
+function onMic(btn) {
+  if (mic) { const same = mic.btn === btn; stopMic(); if (same) return; }
+  if (saying) { stopSpeaking(); saying.classList.remove("on"); saying = null; }
+  const field = document.getElementById(btn.dataset.mic);
+  const msg = document.getElementById("m_" + btn.dataset.mic);
+  const base = field.value.trim();
+  const put = text => { field.value = (base && text ? base + " " : base) + (text || ""); field.dispatchEvent(new Event("input", { bubbles: true })); autoGrow(field); };
+  btn.classList.add("listening"); btn.setAttribute("aria-label", t(UI.micStop, S.lang)); btn.title = t(UI.micStop, S.lang);
+  msg.hidden = false; msg.textContent = t(UI.micStop, S.lang);
+  const handle = listen({ lang: langOf(S.lang).speech, silenceMs: 5000, maxMs: 180000, noSpeechMs: 9000, onInterim: put });
+  mic = { btn, field, handle };
+  handle.promise.then(r => {
+    if (mic && mic.handle === handle) mic = null;
+    btn.classList.remove("listening"); btn.setAttribute("aria-label", t(UI.micStart, S.lang)); btn.title = t(UI.micStart, S.lang);
+    if (r.text) {
+      put(r.text);
+      const id = btn.dataset.mic.replace(/^(f|pa)_/, ""), part = btn.dataset.mic.startsWith("pa_") ? "followup" : "answer";
+      S.V[id] = S.V[id] && S.V[id] !== part ? "both" : part; saveDraft();
+      checkDistress(field.value);
+    }
+    const errMsg = { "not-allowed": UI.micDenied, network: UI.micNoNet, "no-mic": UI.micNoMic, "start-failed": UI.micDenied }[r.error];
+    if (!msg.isConnected) return;
+    msg.textContent = errMsg ? t(errMsg, S.lang) : r.text ? t(UI.micAgain, S.lang) : r.cancelled ? "" : t(UI.micNothing, S.lang);
+    msg.hidden = !msg.textContent;
+  });
+}
+
+function autoGrow(el) { if (el.classList.contains("grow")) { el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; } }
+app.addEventListener("click", e => { const m = e.target.closest("[data-mic]"); if (m) onMic(m); });
+app.addEventListener("input", e => { if (e.target.classList?.contains("grow")) autoGrow(e.target); });
+// Enter in an answer box = Next (Shift+Enter for a new line).
+app.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && e.target.classList?.contains("grow")) { e.preventDefault(); onNext(); } });
+
+// ---------------- records ----------------
+// Column names are "Q<no> <English question>", so the Sheet reads like the Excel tool.
+// Text questions have a second column "Fups: Q<no> <question>" with the follow-up answer.
+// session_id must stay the first column: the Sheet script uses it to find and update a response
+// (an unfinished response is sent as "In progress" and later updated in the same row).
+const META = ["session_id", "User ID", "Status", "Form", "Language", "Source", "Started at", "Last updated", "Time taken (sec)", "Stopped at", "Safety flag", "Fups: asked & why", "Spoken answers"];
+const fupHead = q => "Fups: " + q.column;
+function columns(tool) {
+  return [...META, ...allItems(tool).flatMap(q => q.probe ? [q.column, fupHead(q)] : [q.column])];
+}
+
+function valueOf(q, A) {
+  const v = A[q.id];
+  const opts = optionsOf(q, A);
+  const label = code => code === "__other" ? "Other: " + String(A[q.id + "_other"] || "").trim() : (opts.find(o => o.v === code)?.en ?? code);
+  if (q.type === "multi") return (v || []).map(label).join("; ");
+  if (q.type === "choice" || q.type === "dropdown") return v ? label(v) : "";
+  return String(v ?? "").trim();
+}
+
+// r = the current answers (S) or a saved draft; done = finished (Submit) or still in progress.
+function buildRecord(r, done) {
+  const tool = TOOLS[r.tool?.key || r.tool];
+  const at = done ? new Date() : new Date(r.updated || Date.now());
+  const shown = allItems(tool).filter(q => visible(q, r.A));
+  const stopped = !done && flat(tool)[r.pos]?.q;
+  const row = {
+    session_id: r.sid, "User ID": UID, "Status": done ? "Completed" : "In progress", "Form": tool.key, "Language": r.lang, "Source": r.source,
+    "Started at": r.started, "Last updated": at.toISOString(), "Time taken (sec)": Math.max(0, Math.round((at - new Date(r.started)) / 1000)),
+    "Stopped at": stopped ? "Q" + stopped.no : "", "Safety flag": r.flag ? "YES" : "",
+    "Fups: asked & why": shown.filter(q => r.P[q.id]).map(q => `Q${q.no}: ${r.P[q.id].reason}`).join("; "),
+    "Spoken answers": shown.filter(q => r.V[q.id]).map(q => r.V[q.id] === "answer" ? "Q" + q.no : `Q${q.no} (${r.V[q.id]})`).join("; "),
+  };
+  for (const q of allItems(tool)) {
+    const show = visible(q, r.A);
+    row[q.column] = show ? valueOf(q, r.A) : "";
+    if (q.probe) row[fupHead(q)] = show && r.P[q.id] ? String(r.P[q.id].answer || "").trim() : "";
+  }
+  const cols = columns(tool);
+  return { sid: r.sid, tool: tool.key, cols, values: cols.map(c => row[c] ?? ""), sent: false, saved: at.toISOString() };
+}
+const payload = rec => JSON.stringify({ tool: TOOL_NAME, persona: rec.tool, columns: rec.cols, values: rec.values });
+
+async function submit() {
+  const all = load(STORE, []);
+  if (!all.some(r => r.sid === S.sid)) { all.push(buildRecord(S, true)); save(STORE, all); }
+  clearDraft();
+  go("thanks");
+  // A short random pause so many people pressing Submit at the same moment do not all reach the Sheet at once.
+  await new Promise(r => setTimeout(r, Math.random() * 2000));
+  await syncWaiting();
+  if (S.screen === "thanks") renderThanks();
+}
+
+// Send and read the Sheet's reply. "ok" = saved. A reply starting with "rejected" is final (not retried).
+async function post(body) {
+  try {
+    const res = await fetch(SHEET_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
+    return res.ok ? (await res.text()).trim() : "http " + res.status;
+  } catch { return "network"; }
+}
+
+// Finished responses: retried with growing, random waits (5 s, 10 s, 20 s … up to 10 min) until the Sheet says ok.
+const retryDelay = tries => Math.min(600000, 5000 * 2 ** (tries - 1)) + Math.random() * 5000;
+let syncing = false, retryTimer = 0;
+async function syncWaiting() {
+  if (!SHEET_URL || syncing || !navigator.onLine) return;
+  syncing = true;
+  clearTimeout(retryTimer);
+  try {
+    for (const r of load(STORE, []).filter(r => !r.sent && !r.skipped && !(r.nextTry > Date.now()))) {
+      const reply = await post(payload(r));
+      const all = load(STORE, []);
+      const x = all.find(y => y.sid === r.sid);
+      if (!x) continue;
+      if (reply.startsWith("ok")) { x.sent = true; x.sentAt = new Date().toISOString(); delete x.nextTry; }
+      else if (reply.startsWith("rejected")) { x.skipped = true; x.reply = reply; }
+      else { x.tries = (x.tries || 0) + 1; x.reply = reply.slice(0, 80); x.nextTry = Date.now() + retryDelay(x.tries); }
+      save(STORE, all);
+      if (reply === "network") break;   // offline: stop and try the rest later
+    }
+    await syncDraft();
+  } finally { syncing = false; }
+  const due = load(STORE, []).filter(r => !r.sent && !r.skipped).map(r => r.nextTry || Date.now() + 15000);
+  if (due.length) retryTimer = setTimeout(syncWaiting, Math.max(1000, Math.min(...due) - Date.now()));
+}
+
+// Unfinished response: sent as "In progress" when the page is opened again and when the person leaves the
+// page (switches app, closes the tab). Only sent if something changed since the last confirmed send.
+const draftDirty = d => d && TOOLS[d.tool] && d.sid && d.updated && d.updated !== d.sentUpdated && Object.keys(d.A || {}).length;
+async function syncDraft() {
+  const d = load(DRAFT, null);
+  if (!SHEET_URL || !draftDirty(d)) return;
+  const reply = await post(payload(buildRecord(d, false)));
+  const now = load(DRAFT, null);
+  if (reply.startsWith("ok") && now?.sid === d.sid) { now.sentUpdated = d.updated; save(DRAFT, now); }
+}
+let beaconed = "";
+function beaconDraft() {
+  const d = load(DRAFT, null);
+  if (!SHEET_URL || !draftDirty(d) || beaconed === d.updated || !navigator.sendBeacon) return;
+  // The reply cannot be read here, so the draft stays "not confirmed" and is sent again on the next visit.
+  if (navigator.sendBeacon(SHEET_URL, new Blob([payload(buildRecord(d, false))], { type: "text/plain;charset=utf-8" }))) beaconed = d.updated;
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") beaconDraft(); else syncWaiting(); });
+addEventListener("pagehide", beaconDraft);
+
+function renderThanks() {
+  const rec = load(STORE, []).find(r => r.sid === S.sid);
+  const closing = t(S.tool?.closing, S.lang);
+  const site = (closing.match(/(https?:\/\/)?tumbolo\.shikshagraha\.org\/?/) || [])[0];
+  const closingHTML = site ? paras(closing).replace(esc(site), `<a href="https://tumbolo.shikshagraha.org/" target="_blank" rel="noopener">tumbolo.shikshagraha.org</a>`) : paras(closing);
+  app.innerHTML = `<section class="screen">
+    <div class="panel stack thanks">
+      <div class="tick" aria-hidden="true">✓</div>
+      <h1>${tx(UI.thanksTitle)}</h1>
+      ${closing ? `<div class="opening" lang="${hasLang(S.tool?.closing) ? S.lang : "en"}">${closingHTML}</div>` : ""}
+      <p>${tx(UI.thanksText)} ${rec?.sent ? tx(UI.thanksSent) : SHEET_URL ? tx(UI.thanksQueued) : ""}</p>
+      <p class="small muted">${tx(UI.refCode)}: <span class="code">${esc(S.sid)}</span></p>
+      ${S.flag ? supportBox() : ""}
+      <div class="row"><a class="big" href="https://tumbolo.shikshagraha.org/" target="_blank" rel="noopener">${tx(UI.visit, { site: "TumBolo" })} ↗</a>
+        <button class="btn" id="again">${tx(UI.another)}</button><button class="btn" id="home">${tx(UI.home)}</button></div>
+    </div></section>`;
+  $("#again").onclick = () => { Object.assign(S, { A: {}, P: {}, V: {}, flag: false, sid: newSid(), started: new Date().toISOString() }); S.pos = firstVisible(0); go("q"); saveDraft(); };
+  $("#home").onclick = () => { S.tool = null; S.consent = false; go("start"); };
+}
+
+// ---------------- device admin: ?admin ----------------
+function csvOf(recs) {
+  if (!recs.length) return "";
+  const cols = recs[recs.length - 1].cols;
+  const cell = v => { let s = String(v ?? ""); if (/^[=+\-@]/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  return "﻿" + [cols.map(cell).join(","), ...recs.map(r => cols.map(c => cell(r.values[r.cols.indexOf(c)])).join(","))].join("\n");
+}
+function renderAdmin() {
+  const all = load(STORE, []);
+  const d = load(DRAFT, null);
+  const rows = Object.values(TOOLS).map(tool => {
+    const recs = all.filter(r => r.tool === tool.key);
+    const waiting = recs.filter(r => !r.sent && !r.skipped);
+    const last = waiting.filter(r => r.reply).pop();
+    return `<tr><td>${esc(tool.title.en)}</td><td>${recs.length}</td><td>${recs.filter(r => r.sent).length}</td><td>${waiting.length}${last ? ` <span class="small muted">(last: ${esc(last.reply)})</span>` : ""}</td><td>${recs.filter(r => r.skipped).length}</td>
+      <td>${d?.tool === tool.key ? (d.updated === d.sentUpdated ? "1 (sent)" : "1 (not sent yet)") : "0"}</td>
+      <td><button class="btn" data-csv="${tool.key}" ${recs.length ? "" : "disabled"}>CSV</button></td></tr>`;
+  }).join("");
+  app.innerHTML = `<section class="screen">
+    <div class="panel stack"><h1>Responses on this device</h1>
+      <p class="small">Google Sheet: ${SHEET_URL ? "connected" : "not set up — responses stay on this device until it is"} · User ID on this device: <span class="code">${esc(UID)}</span></p></div>
+    <div class="panel stack"><div class="tbl"><table><thead><tr><th>Form</th><th>Finished</th><th>Sent</th><th>Waiting</th><th>Rejected by Sheet</th><th>In progress</th><th>Download</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="row"><button class="big" id="sync" ${SHEET_URL ? "" : "disabled"}>Send waiting now</button><a class="btn" href="./">Open the form</a></div></div></section>`;
+  app.querySelectorAll("[data-csv]").forEach(b => b.onclick = () => {
+    const blob = new Blob([csvOf(all.filter(r => r.tool === b.dataset.csv))], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `1MV_V3_${b.dataset.csv}_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+  });
+  $("#sync").onclick = async () => { await syncWaiting(); renderAdmin(); };
+}
+
+// ---------------- start ----------------
+$("#ver").textContent = "V3 · v " + VERSION;
+const qlang = params.get("lang");
+S.lang = qlang && LANGS.some(l => l.code === qlang) ? qlang : "en";
+document.documentElement.lang = S.lang;
+loadFont(langOf(S.lang));
+renderTop();
+render();
+syncWaiting();
+addEventListener("online", syncWaiting);
