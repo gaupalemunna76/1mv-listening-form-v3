@@ -13,7 +13,7 @@ Version 3 of the 1MV Listening Form (#TumBolo), built from Form 1 (V1) with the 
 | | |
 |---|---|
 | Questions | From the Excel files: Youth 23, Parents 15, General Public 10 (incl. 7 conditional: 0.5a–d, 0.8a, 8B, 9B). Opening and closing text from the Excel. Choices required, text optional (Public follows its "Response required" column) — confirmed by Munna. |
-| Languages | English, हिंदी, ಕನ್ನಡ, తెలుగు, ଓଡ଼ିଆ, தமிழ், ਪੰਜਾਬੀ, मराठी (team's language screen). Questions: English + Marathi now; any language without a translation shows English, with a note. |
+| Languages | English, हिंदी, ಕನ್ನಡ, తెలుగు, ଓଡ଼ିଆ, தமிழ், ਪੰਜਾਬੀ, मराठी (team's language screen). Everything (questions, options, opening/closing, follow-ups, states, screen text) in all 8. Marathi questions from the team; Hindi, Kannada, Telugu, Odia, Tamil, Punjabi are drafts (`lang/<code>.json`) for native review. A team Excel for a language replaces the draft automatically. |
 | #TumBolo | Next to the Shikshagraha logo, changes with the language. Marathi #तुम्हीसांगा is from the team's file; the others are drafts for native review. |
 | Look | Shikshagraha colours (#382280, #562e91, #7f3289, #ec2288, #fa830b — from shikshagraha.org) and font (Source Sans 3). Large, bordered buttons (48–52 px); on phones Next is full width. |
 | State → district | District list shows only the chosen state's districts, from the team's SG Dashboard helper list (723 districts, `tools/districts_sg_dashboard_helper.csv`); "Not in the list" lets people type. |
@@ -52,7 +52,7 @@ Rename the old tab first (e.g. `Youth (old)`), then publish; a fresh tab is made
 
 ## Run and test
 ```
-node tests/forms.test.mjs          # questions, conditions, columns, districts, follow-ups (54)
+node tests/forms.test.mjs          # questions, conditions, columns, districts, follow-ups (104)
 node tests/e2e_v3.mjs              # whole Youth form in headless Edge with a fake Sheet (40)
 node tests/transcript.test.mjs && node tests/phone_speech.test.mjs   # speech clean-up (16)
 python set_version.py && git add -A && git commit && git push
@@ -61,7 +61,7 @@ Local copies never send to the real Sheet unless `?sync` is added (`?sheet=<url>
 
 ## Open items
 1. Munna: new Sheet + script, send the /exec URL (setup above).
-2. Translations for Hindi, Kannada, Telugu, Odia, Tamil, Punjabi questions (team); screen text and rephrased follow-ups for those languages.
+2. Native review of the draft translations in `lang/hi|kn|te|or|ta|pa.json` (fix there, then `node tools/check_lang.mjs <code>` and `node tools/build_lang.mjs`), or send the team's Excel.
 3. Native review of the #TumBolo drafts, Marathi rephrasings and Marathi screen text.
 4. Assamese is in the team's Info sheet but not on the language screen — not added.
 5. District list (team's SG Dashboard helper) is older in places (e.g. Andhra Pradesh 13 districts, Delhi as one) — update the CSV and run `python tools/make_districts.py` if needed.
